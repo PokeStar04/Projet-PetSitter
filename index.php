@@ -15,6 +15,7 @@
         <input type="text" placeholder="Nom"><br />
         <input type="text" placeholder="Prénom">
         <input type="string" placeholder="Date de naissance">
+        <input type="string" placeholder="Numéro de téléphone">
 
         dsqjdqksjsdlqjdksljqlms
 
