@@ -14,10 +14,10 @@
     <form>
         <input type="text" placeholder="Nom"><br />
         <input type="text" placeholder="Prénom">
+        <input type="string" placeholder="Date de naissance">
 
+        dsqjdqksjsdlqjdksljqlms
 
-
-        uilfghgjkyu::
 
         <button type="submit">Go !</button>
     </form>
