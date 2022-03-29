@@ -1,5 +1,5 @@
 <?php
-  session_start();
+  
   
   class connexionDB {
     private $host    = '127.0.0.1';  // nom de l'host  

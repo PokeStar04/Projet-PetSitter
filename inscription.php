@@ -1,5 +1,5 @@
 <?php
-include_once('./_db/connexionDB.php');
+include_once('./require.php');
 
 if(isset($_SESSION['id'])){
     header('Location: /');
@@ -13,18 +13,21 @@ if(!empty($_POST)){
     if(isset($_POST['inscription'])){
     
     //Donnée du post
-    $nom = ucfirst(trim($_POST['nom'])) ;
-    $prenom = ucfirst(trim($_POST['prenom'])) ;
-    $naissance = trim($_POST['naissance']);
-    $mail = trim($_POST['mail']);
-    $telephone = trim($_POST['telephone']);
-    $photo = trim($_POST['photo']);
-    $pays = trim($_POST['pays']);
-    $postal=trim($_POST{'postal'});
-    $ville = ucfirst(trim($_POST['ville'])) ;
-    $rue = trim($_POST['rue']);
-    $garder = trim($_POST['garder']);
-    $mdp = trim($_POST['mdp']);
+
+    $nom = htmlspecialchars(ucfirst(trim($_POST['nom'])) ) ;
+    $prenom =htmlspecialchars(ucfirst(trim($_POST['prenom'])))  ;
+    $naissance =htmlspecialchars(trim($_POST['naissance']));
+    $mail = htmlspecialchars(trim($_POST['mail']));
+    $telephone =htmlspecialchars(trim($_POST['telephone'])) ;
+    $photo =htmlspecialchars(trim($_POST['photo'])) ;
+    $pays =htmlspecialchars(trim($_POST['pays'])) ;
+    $postal=htmlspecialchars(trim($_POST{'postal'})) ;
+    $ville =htmlspecialchars(ucfirst(trim($_POST['ville'])));
+    $rue =htmlspecialchars(trim($_POST['rue'])) ;
+    $mdp =htmlspecialchars(trim($_POST['mdp'])) ;
+    $promener =htmlspecialchars(trim($_POST['promener'])) ;
+    $nourrir =htmlspecialchars(trim($_POST['nourrir'])) ;
+    
 
 
     //Gestion message d'erreur
@@ -95,11 +98,6 @@ if(!empty($_POST)){
         $valid=false;
         $err_rue = "Ce champ ne peut être vide";
         }
-    if (empty($garder)){
-        $valid=false;
-        $err_garder = "Ce champ ne peut être vide";
-        
-        }
     if (empty($mdp)){
         $valid=false;
         $err_mdp = "Ce champ ne peut être vide";
@@ -110,7 +108,9 @@ if(!empty($_POST)){
 
         if ($valid){
         //insert into dans la bd
-            $preparedRequest = $DB->prepare('INSERT INTO utilisateur (nom, prenom,naissance,mail,telephone,photo,pays,ville,postal,rue,garder,mdp) VALUES (:nom,:prenom,:naissance,:mail,:telephone,:photo,:pays,:ville,:postal,:rue,:garder,:mdp)');
+        
+            $preparedRequest = $DB->prepare('INSERT INTO utilisateur (id,nom, prenom,naissance,mail,telephone,photo,pays,ville,postal,rue,mdp) VALUES (:nom,:prenom,:naissance,:mail,:telephone,:photo,:pays,:ville,:postal,:rue,:mdp)');
+            $preparedRequest2 = $DB->prepare('INSERT INTO garder (promener, nourrir) VALUES (:promener,:nourrir)');
             $preparedRequest->bindValue('nom', $_POST['nom'], PDO::PARAM_STR);
             $preparedRequest->bindValue('prenom', $_POST['prenom'], PDO::PARAM_STR);
             $preparedRequest->bindValue('naissance', $_POST['naissance'], PDO::PARAM_INT);
@@ -121,9 +121,14 @@ if(!empty($_POST)){
             $preparedRequest->bindValue('ville', $_POST['ville'], PDO::PARAM_STR);
             $preparedRequest->bindValue('postal', $_POST['postal'], PDO::PARAM_INT);
             $preparedRequest->bindValue('rue', $_POST['rue'], PDO::PARAM_INT);
-            $preparedRequest->bindValue('garder', $_POST['garder'], PDO::PARAM_INT);
             $preparedRequest->bindValue('mdp', $_POST['mdp'], PDO::PARAM_STR);
+            //
+           $preparedRequest2->bindValue('promener', $_POST['promener'], PDO::PARAM_BOOL);
+           $preparedRequest2->bindValue('nourrir', $_POST['nourrir'], PDO::PARAM_BOOL);
+          
+            
             $preparedRequest->execute();
+            $preparedRequest2->execute();
         
             header('Location: connexion.php');
             require_once('close.php');
@@ -190,12 +195,13 @@ var_dump($_POST);
         <?php  if(isset($err_rue)){ echo $err_rue; } ?>
         <label>Rue</label>
         <input type="text" name="rue" placeholder="rue" value="<?php  if(isset($rue)){ echo $rue; } ?>"><br />
-        <?php  if(isset($err_garder)){ echo $err_garder; } ?>
-        <label>garder</label>
-        <input type="text" name="garder" placeholder="garder" value="<?php  if(isset($garder)){ echo $garder; } ?>"><br />
-        <?php  if(isset($err_mdp)){ echo $err_mdp; } ?>
         <label>Mot de passe</label>
         <input type="password" name="mdp" placeholder="mdp" value="<?php  if(isset($mdp)){ echo $mdp; } ?>"><br />
+        <!<label>Promener</label>
+        <input type="checkbox" name="promener" placeholder="promener" value="<?php  if(isset($promener)){ echo $promener; } ?>"><br />
+        <label >nourrir</label>
+        <input type="checkbox" name="nourrir" placeholder="nourrir" value="<?php  if(isset($nourrir)){ echo $nourrir; } ?>"><br />
+
         <button type="submit" name="inscription">Go !</button>
 
 
