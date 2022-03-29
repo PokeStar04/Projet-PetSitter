@@ -1,6 +1,7 @@
 <nav>
     <li><a href="/">acceuil</a></li>
     <li><a href="../voirAnnonce.php">Voir annonce</a></li>
+    <li><a href="../chercher_annonce.php">chercher annonce</a></li>
     <?php
     if(!isset($_SESSION['id'])){
     ?>

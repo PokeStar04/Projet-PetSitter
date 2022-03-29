@@ -27,6 +27,7 @@ if(!empty($_POST)){
     $mdp =htmlspecialchars(trim($_POST['mdp'])) ;
     $promener =htmlspecialchars(trim($_POST['promener'])) ;
     $nourrir =htmlspecialchars(trim($_POST['nourrir'])) ;
+    $garder =htmlspecialchars(trim($_POST['garder'])) ;
     
 
 
@@ -110,7 +111,7 @@ if(!empty($_POST)){
         //insert into dans la bd
         
             $preparedRequest = $DB->prepare('INSERT INTO utilisateur (id,nom, prenom,naissance,mail,telephone,photo,pays,ville,postal,rue,mdp) VALUES (:nom,:prenom,:naissance,:mail,:telephone,:photo,:pays,:ville,:postal,:rue,:mdp)');
-            $preparedRequest2 = $DB->prepare('INSERT INTO garder (promener, nourrir) VALUES (:promener,:nourrir)');
+            $preparedRequest2 = $DB->prepare('INSERT INTO garder (promener, nourrir, garder) VALUES (:promener,:nourrir, :garder)');
             $preparedRequest->bindValue('nom', $_POST['nom'], PDO::PARAM_STR);
             $preparedRequest->bindValue('prenom', $_POST['prenom'], PDO::PARAM_STR);
             $preparedRequest->bindValue('naissance', $_POST['naissance'], PDO::PARAM_INT);
@@ -125,6 +126,7 @@ if(!empty($_POST)){
             //
            $preparedRequest2->bindValue('promener', $_POST['promener'], PDO::PARAM_BOOL);
            $preparedRequest2->bindValue('nourrir', $_POST['nourrir'], PDO::PARAM_BOOL);
+           $preparedRequest2->bindValue('garder', $_POST['garder'], PDO::PARAM_BOOL);
           
             
             $preparedRequest->execute();
@@ -197,10 +199,12 @@ var_dump($_POST);
         <input type="text" name="rue" placeholder="rue" value="<?php  if(isset($rue)){ echo $rue; } ?>"><br />
         <label>Mot de passe</label>
         <input type="password" name="mdp" placeholder="mdp" value="<?php  if(isset($mdp)){ echo $mdp; } ?>"><br />
-        <!<label>Promener</label>
+        <label>Promener</label>
         <input type="checkbox" name="promener" placeholder="promener" value="<?php  if(isset($promener)){ echo $promener; } ?>"><br />
         <label >nourrir</label>
         <input type="checkbox" name="nourrir" placeholder="nourrir" value="<?php  if(isset($nourrir)){ echo $nourrir; } ?>"><br />
+        <label >garder</label>
+        <input type="checkbox" name="garder" placeholder="garder" value="<?php  if(isset($garder)){ echo $garder; } ?>"><br />
 
         <button type="submit" name="inscription">Go !</button>
 
