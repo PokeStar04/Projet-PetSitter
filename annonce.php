@@ -1,6 +1,23 @@
 <?php
-include_once('_db/connexionDB.php');
+include_once('./require.php');
 
+
+
+
+
+
+
+
+
+$preparedRequest = $DB->prepare('INSERT INTO annonce (horaire,startDate, endDate,note,actif,userID) VALUES (:horaire,:startDate, :endDate,:note,:actif,:userID)');
+         
+            $preparedRequest->bindValue('horaire', $_POST['horaire'], PDO::PARAM_INT);
+            $preparedRequest->bindValue('startDate', $_POST['startDate'], PDO::PARAM_INT);
+            $preparedRequest->bindValue('endDate', $_POST['endDate'], PDO::PARAM_INT);
+            $preparedRequest->bindValue('note', $_POST['note'], PDO::PARAM_INT);
+            $preparedRequest->bindValue('actif', $_POST['actif'], PDO::PARAM_BOOL);
+            $preparedRequest->bindValue('userID', $_SESSION['id'], PDO::PARAM_INT);
+            $preparedRequest->execute();
 
 ?>
 <!DOCTYPE html>
@@ -12,29 +29,29 @@ include_once('_db/connexionDB.php');
 ?>
 
     <title>Annonce </title>
+    <?= $_SESSION['id']?>
 </head>
 <body>
+<?php  require_once('./_nav/navigation.php')?>
+<form method="post">
+    <label>horaire</label>
+    <input type="text" name="horaire" placeholder="horaire" value="<?php  if(isset($horaire)){ echo $horaire; } ?>"><br />
 
-    <label>horaire</label>
-    <input type="text" name="horaire" placeholder="horaire" value="<?php  if(isset($horaire)){ echo $horaire; } ?>"><br />
-    <?php  if(isset($err_prenom)){ echo $err_prenom; } ?>
-    <label>prix</label>
-    <input type="text" name="prix" placeholder="prix" value="<?php  if(isset($prix)){ echo $prix; } ?>"><br />
-    <?php  if(isset($err_prenom)){ echo $err_prenom; } ?>
-    <label>horaire</label>
-    <input type="text" name="horaire" placeholder="horaire" value="<?php  if(isset($horaire)){ echo $horaire; } ?>"><br />
-    <?php  if(isset($err_prenom)){ echo $err_prenom; } ?>
-    <label>horaire</label>
-    <input type="text" name="horaire" placeholder="horaire" value="<?php  if(isset($horaire)){ echo $horaire; } ?>"><br />
-    <?php  if(isset($err_prenom)){ echo $err_prenom; } ?>
-    <label>horaire</label>
-    <input type="text" name="horaire" placeholder="horaire" value="<?php  if(isset($horaire)){ echo $horaire; } ?>"><br />
-    <?php  if(isset($err_prenom)){ echo $err_prenom; } ?>
-    <label>horaire</label>
-    <input type="text" name="horaire" placeholder="horaire" value="<?php  if(isset($horaire)){ echo $horaire; } ?>"><br />
-    <?php  if(isset($err_prenom)){ echo $err_prenom; } ?>
-    <label>horaire</label>
-    <input type="text" name="horaire" placeholder="horaire" value="<?php  if(isset($horaire)){ echo $horaire; } ?>"><br />
+    
+    <label>startDate</label>
+    <input type="text" name="startDate" placeholder="startDate" value="<?php  if(isset($startDate)){ echo $startDate; } ?>"><br />
+    
+    <label>endDate</label>
+    <input type="text" name="endDate" placeholder="endDate" value="<?php  if(isset($endDate)){ echo $endDate; } ?>"><br />
+    
+    <label>note</label>
+    <input type="text" name="note" placeholder="note" value="<?php  if(isset($note)){ echo $note; } ?>"><br />
+ 
+    <label>actif</label>
+    <input type="checkbox" name="actif" placeholder="actif" value="<?php  if(isset($actif)){ echo $actif; } ?>"><br />
+    <button type="submit" name="createAnnonce">Crée ton annonce</button>
+</form>
+    
     <?php  if(isset($err_prenom)){ echo $err_prenom; } ?>
 
     
