@@ -28,6 +28,7 @@ if(!empty($_POST)){
     $promener =htmlspecialchars(trim($_POST['promener'])) ;
     $nourrir =htmlspecialchars(trim($_POST['nourrir'])) ;
     $garder =htmlspecialchars(trim($_POST['garder'])) ;
+   
     
 
 
@@ -110,8 +111,8 @@ if(!empty($_POST)){
         if ($valid){
         //insert into dans la bd
         
-            $preparedRequest = $DB->prepare('INSERT INTO utilisateur (id,nom, prenom,naissance,mail,telephone,photo,pays,ville,postal,rue,mdp) VALUES (:nom,:prenom,:naissance,:mail,:telephone,:photo,:pays,:ville,:postal,:rue,:mdp)');
-            $preparedRequest2 = $DB->prepare('INSERT INTO garder (promener, nourrir, garder) VALUES (:promener,:nourrir, :garder)');
+            $preparedRequest = $DB->prepare('INSERT INTO utilisateur (nom, prenom,naissance,mail,telephone,photo,pays,ville,postal,rue,mdp) VALUES (:nom,:prenom,:naissance,:mail,:telephone,:photo,:pays,:ville,:postal,:rue,:mdp)');
+            $preparedRequest2 = $DB->prepare('INSERT INTO garder (promener, nourrir, garder, userID) VALUES (:promener,:nourrir, :garder,:userID)');
             $preparedRequest->bindValue('nom', $_POST['nom'], PDO::PARAM_STR);
             $preparedRequest->bindValue('prenom', $_POST['prenom'], PDO::PARAM_STR);
             $preparedRequest->bindValue('naissance', $_POST['naissance'], PDO::PARAM_INT);
@@ -124,14 +125,17 @@ if(!empty($_POST)){
             $preparedRequest->bindValue('rue', $_POST['rue'], PDO::PARAM_INT);
             $preparedRequest->bindValue('mdp', $_POST['mdp'], PDO::PARAM_STR);
             //
-           $preparedRequest2->bindValue('promener', $_POST['promener'], PDO::PARAM_BOOL);
-           $preparedRequest2->bindValue('nourrir', $_POST['nourrir'], PDO::PARAM_BOOL);
-           $preparedRequest2->bindValue('garder', $_POST['garder'], PDO::PARAM_BOOL);
-          
-            
+            $preparedRequest2->bindValue('promener', $_POST['promener'], PDO::PARAM_BOOL);
+            $preparedRequest2->bindValue('nourrir', $_POST['nourrir'], PDO::PARAM_BOOL);
+            $preparedRequest2->bindValue('garder', $_POST['garder'], PDO::PARAM_BOOL);
+            $id =$DB->lastInsertId();
+           
+            $preparedRequest2->bindValue('userID', $id,PDO::lastInsertId());
+         
+           
             $preparedRequest->execute();
             $preparedRequest2->execute();
-        
+          
             header('Location: connexion.php');
             require_once('close.php');
             
@@ -142,10 +146,10 @@ if(!empty($_POST)){
 }
     else{
        
-    }
+    
 
 }
-var_dump($_POST);
+ }
 ?>
 
 <!DOCTYPE html>
