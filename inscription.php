@@ -112,7 +112,7 @@ if(!empty($_POST)){
         //insert into dans la bd
         
             $preparedRequest = $DB->prepare('INSERT INTO utilisateur (nom, prenom,naissance,mail,telephone,photo,pays,ville,postal,rue,mdp) VALUES (:nom,:prenom,:naissance,:mail,:telephone,:photo,:pays,:ville,:postal,:rue,:mdp)');
-            $preparedRequest2 = $DB->prepare('INSERT INTO garder (promener, nourrir, garder, userID) VALUES (:promener,:nourrir, :garder,:userID)');
+         
             $preparedRequest->bindValue('nom', $_POST['nom'], PDO::PARAM_STR);
             $preparedRequest->bindValue('prenom', $_POST['prenom'], PDO::PARAM_STR);
             $preparedRequest->bindValue('naissance', $_POST['naissance'], PDO::PARAM_INT);
@@ -124,18 +124,23 @@ if(!empty($_POST)){
             $preparedRequest->bindValue('postal', $_POST['postal'], PDO::PARAM_INT);
             $preparedRequest->bindValue('rue', $_POST['rue'], PDO::PARAM_INT);
             $preparedRequest->bindValue('mdp', $_POST['mdp'], PDO::PARAM_STR);
-            //
-            $preparedRequest2->bindValue('promener', $_POST['promener'], PDO::PARAM_BOOL);
-            $preparedRequest2->bindValue('nourrir', $_POST['nourrir'], PDO::PARAM_BOOL);
-            $preparedRequest2->bindValue('garder', $_POST['garder'], PDO::PARAM_BOOL);
-            $id =$DB->lastInsertId();
-           
-            $preparedRequest2->bindValue('userID', $id,PDO::lastInsertId());
-         
-           
+                   
             $preparedRequest->execute();
+            $userID =$DB->lastInsertId();         
+            
+            $preparedRequest2 = $DB->prepare('INSERT INTO garder (promener, nourrir, garder, userID) VALUES (:promener,:nourrir, :garder,:userID)');
+            // if (isset($_POST['promener'])){
+            $preparedRequest2->bindValue('promener', $_POST['promener'], PDO::PARAM_BOOL);
+            // }
+           
+            // if (isset($_POST['nourrir'])){
+            $preparedRequest2->bindValue('nourrir', $_POST['nourrir'], PDO::PARAM_BOOL);
+            // }
+            // if (isset($_POST['garder'])){
+            $preparedRequest2->bindValue('garder', $_POST['garder'], PDO::PARAM_BOOL);
+            // }
+            $preparedRequest2->bindValue('userID', $userID, PDO::PARAM_INT);
             $preparedRequest2->execute();
-          
             header('Location: connexion.php');
             require_once('close.php');
             
@@ -204,11 +209,11 @@ if(!empty($_POST)){
         <label>Mot de passe</label>
         <input type="password" name="mdp" placeholder="mdp" value="<?php  if(isset($mdp)){ echo $mdp; } ?>"><br />
         <label>Promener</label>
-        <input type="checkbox" name="promener" placeholder="promener" value="<?php  if(isset($promener)){ echo $promener; } ?>"><br />
+        <input type="checkbox" name="promener" placeholder="promener" value="1"><br />
         <label >nourrir</label>
-        <input type="checkbox" name="nourrir" placeholder="nourrir" value="<?php  if(isset($nourrir)){ echo $nourrir; } ?>"><br />
+        <input type="checkbox" name="nourrir" placeholder="nourrir" value="1"><br />
         <label >garder</label>
-        <input type="checkbox" name="garder" placeholder="garder" value="<?php  if(isset($garder)){ echo $garder; } ?>"><br />
+        <input type="checkbox" name="garder" placeholder="garder" value="1"><br />
 
         <button type="submit" name="inscription">Go !</button>
 
