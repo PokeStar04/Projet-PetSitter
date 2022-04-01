@@ -1,18 +1,24 @@
 <?php
 include_once('./require.php');
 
+    if (!isset($_SESSION['id'])) {
+        header('Location: connexion.php');
+        exit;
+    }
+
     $modifierAnnonce = false;
-    if(isset($_GET['id']) && !isset($_SESSION['id'])) { // Create / Update (CRUD)
+    if(isset($_GET['id']) && isset($_SESSION['id'])) { // Create / Update (CRUD)
         $preparedRequest = $DB->prepare('SELECT * FROM annonce WHERE id = :id');
         $preparedRequest->bindValue('id', $_GET['id'], PDO::PARAM_INT);
         $preparedRequest->execute();
 
         $data = $preparedRequest->fetch();
-        $modifierAnnonce = true;
 
-        if(!empty($_POST)) {
-            if($data->userID == $_SESSION['id']) {
-                // session is the author of the annonce
+        if($data['userID'] == $_SESSION['id']) {
+            // session is the author of the annonce
+            $modifierAnnonce = true;
+
+            if (!empty($_POST)) {
                 $preparedRequest = $DB->prepare('UPDATE annonce SET horaire = :horaire, startDate = :startDate, endDate = :endDate, note = :note, actif = :actif WHERE id = :id');
 
                 $preparedRequest->bindValue('horaire', $_POST['horaire'], PDO::PARAM_INT);
@@ -25,13 +31,13 @@ include_once('./require.php');
                 extract($_POST);
 
                 // header('Location: voirAnnonce.php');
+            } else {
+                $horaire = $data['horaire'];
+                $startDate = $data['startDate'];
+                $endDate = $data['endDate'];
+                $note = $data['note'];
+                $actif = $data['actif'];
             }
-        } else {
-            $horaire = $data['horaire'];
-            $startDate = $data['startDate'];
-            $endDate = $data['endDate'];
-            $note = $data['note'];
-            $actif = $data['actif'];
         }
 
     } else {
@@ -45,7 +51,7 @@ include_once('./require.php');
                 $preparedRequest->bindValue('note', $_POST['note'], PDO::PARAM_INT);
                 $preparedRequest->bindValue('actif', $_POST['actif'], PDO::PARAM_BOOL);
                 $preparedRequest->bindValue('userID', $_SESSION['id'], PDO::PARAM_INT);
-                $preparedRequest->execute();
+                print_r($preparedRequest->execute());
             }
         }
     }
