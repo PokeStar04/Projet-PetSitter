@@ -1,0 +1,92 @@
+.header{
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    z-index: 10;
+}
+.navbar {
+    flex: 2;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+}
+.navbar a {
+    color: white;
+}
+
+.logo{
+    flex: 1;
+}
+
+div a {
+    flex: 2;
+    display: flex;
+    justify-content: space-evenly;
+    gap: 5px;
+}
+
+button {
+    border: 0;
+    line-height: 1;
+    padding: 10PX 20px;
+    text-align: center;
+    border-radius: 10px;
+    border: solid #F3C053 2px;
+    background-color: #F3C053;
+    color: white;
+    margin-top: 20px;
+}
+
+button:hover {
+    background-color: white;
+    color: #F3C053;    
+}
+
+p{
+    margin-top: 20px;
+}
+
+hr{
+    margin-top: 30px;
+    border-top: 1px solid #C4C4C4 ;
+}
+
+.services{
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    row-gap: 10px ;
+    justify-content: space-between;
+    top: 15px;
+    flex-direction: column;
+    display: inline;
+    margin-bottom: 200px;
+}
+
+.engage{
+    margin: 50px 0 30px 0;
+}
+
+li{
+    margin-bottom: 3px;
+}
+
+.engagements li {
+    line-height: 2;
+}
+
+.with-slider {
+    overflow: hidden;
+}
+
+.slider{
+    position: relative; 
+    display: flex;
+    transform: translateX(0);
+    transition: .3s all;
+}
+
+.slide{
+    margin-right: 20px;
+    /* flex-shrink: 0; */
+}

@@ -1,0 +1,17 @@
+.navbar{
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    z-index: 10;
+}
+
+.logo{
+    flex: 1;
+}
+
+div a {
+    flex: 2;
+    display: flex;
+    justify-content: space-evenly;
+    gap: 5px;
+}
