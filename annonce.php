@@ -54,6 +54,19 @@ include_once('./require.php');
                 $preparedRequest->execute();
 
                 header('Location: voirAnnonce.php');
+                $preparedRequest2 = $DB->prepare('INSERT INTO animaux (chien, chat, lapin, rongeur, furet, herisson, aquarium, oiseaux, reptiles, userID) VALUES (:chien, :chat, :lapin, :rongeur, :furet, :herisson, :aquarium, :oiseaux, :reptiles,  :userID)');
+                
+                $preparedRequest2->bindValue('chien', $_POST['chien'], PDO::PARAM_BOOL);
+                $preparedRequest2->bindValue('chat', $_POST['chat'], PDO::PARAM_BOOL);
+                $preparedRequest2->bindValue('lapin', $_POST['lapin'], PDO::PARAM_BOOL);
+                $preparedRequest2->bindValue('rongeur', $_POST['rongeur'], PDO::PARAM_BOOL);
+                $preparedRequest2->bindValue('furet', $_POST['furet'], PDO::PARAM_BOOL);
+                $preparedRequest2->bindValue('herisson', $_POST['herisson'], PDO::PARAM_BOOL);
+                $preparedRequest2->bindValue('aquarium', $_POST['aquarium'], PDO::PARAM_BOOL);
+                $preparedRequest2->bindValue('oiseaux', $_POST['oiseaux'], PDO::PARAM_BOOL);
+                $preparedRequest2->bindValue('reptiles', $_POST['reptiles'], PDO::PARAM_BOOL);
+                $preparedRequest2->bindValue('userID', $_SESSION['id'], PDO::PARAM_INT);
+                $preparedRequest2->execute();
             }
         }
     }
@@ -132,6 +145,41 @@ include_once('./require.php');
                             </div>
                         </div>
                     </div>
+                    <div class="row services">
+                        <div class="font_raleway_regular_15px green_txt">
+                            <div class="col-12">
+                             
+                                <input type="checkbox" name="chien" placeholder="chien" value="chien">
+                                <label>Chien &nbsp&nbsp&nbsp</label>
+                               
+                                <input type="checkbox" name="chat" placeholder="chat" value="chat">
+                                <label>Chat &nbsp&nbsp&nbsp</label>
+                                
+                                <input type="checkbox" name="lapin" placeholder="lapin" value="lapin">
+                                <label>Lapin &nbsp&nbsp&nbsp</label></br>
+                         
+                                <input type="checkbox" name="rongeur" placeholder="rongeur" value="rongeur">
+                                <label>Rongeur &nbsp&nbsp&nbsp</label>
+                             
+                                <input type="checkbox" name="furet" placeholder="furet" value="furet">
+                                <label>Furet &nbsp&nbsp&nbsp</label>
+                             
+                                <input type="checkbox" name="herisson" placeholder="herisson" value="herisson">
+                                <label>Hérisson &nbsp&nbsp&nbsp</label></br>
+                              
+                                <input type="checkbox" name="aquarium" placeholder="aquarium" value="aquarium">
+                                <label>Aquarium &nbsp&nbsp&nbsp</label>
+                               
+                                <input type="checkbox" name="oiseaux" placeholder="oiseaux" value="oiseaux">
+                                <label>Oiseaux &nbsp&nbsp&nbsp</label>
+                      
+                                <input type="checkbox" name="reptiles" placeholder="reptiles" value="reptiles">
+                                <label>Reptiles &nbsp&nbsp&nbsp</label></br>
+
+                                <label for="actif" value="<?php if (isset($actif)) echo $actif; ?>">Animaux choisie?</label>
+                            </div>
+                        </div>
+                    </div>
                     <div class="row">
                         <div class="font_raleway_regular_15px green_txt">
                             <div class="col-12">
@@ -139,6 +187,7 @@ include_once('./require.php');
                             </div>
                         </div>
                     </div>
+                    
                 </form>
 
             </div>
