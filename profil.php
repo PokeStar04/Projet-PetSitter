@@ -69,7 +69,7 @@ if($result['id'] !== $_GET['id']) {
 		<div class="row">
 			<div class="col-12">
 				<div>
-					<a href="mailto:katherince.l@gmail.com"><button class="white_txt font_raleway_regular_15px"> <img src="ressources/icon-send.svg" width="8%"> Envoyer un message</button></a>
+					<a href="mailto:<?php echo $result['mail'] ?>"><button class="white_txt font_raleway_regular_15px"> <img src="ressources/icon-send.svg" width="8%"> Envoyer un message</button></a>
 					<button class="white_txt font_raleway_regular_15px"> <img src="ressources/icon-favoris.svg" width="8%"> Mettre en pet’favoris</button>
 				</div>
 			</div>
