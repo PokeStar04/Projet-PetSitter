@@ -5,3 +5,35 @@
 .stats {
 	display: flex;
 }
+
+button {
+	border: 0;
+	line-height: 1;
+	padding: 10PX 20px;
+	text-align: center;
+	border-radius: 10px;
+	border: solid #F3C053 2px;
+	background-color: #F3C053;
+	color: white;
+	margin-top: 20px;
+}
+
+button:hover {
+	box-shadow: 6px 6px 9px -3px #D8D8D8;
+}
+
+.box-commentaires {
+	width: 312px;
+	height: 138px;
+	background-color: #FFFAF5;
+	border-radius: 20px;
+	box-shadow: 6px 6px 9px -3px #D8D8D8;
+	padding: 10px;
+	margin: 10px;
+}
+
+.commentaires {
+	display: flex;
+	flex-wrap: wrap;
+	flex-shrink: 0;
+}
