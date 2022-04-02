@@ -107,7 +107,7 @@ if (!empty($_POST)) {
 
             $preparedRequest->bindValue('nom', $_POST['nom'], PDO::PARAM_STR);
             $preparedRequest->bindValue('prenom', $_POST['prenom'], PDO::PARAM_STR);
-            $preparedRequest->bindValue('naissance', $_POST['naissance'], PDO::PARAM_INT);
+            $preparedRequest->bindValue('naissance', $naissance);
             $preparedRequest->bindValue('mail', $_POST['mail'], PDO::PARAM_STR);
             $preparedRequest->bindValue('telephone', $_POST['telephone'], PDO::PARAM_INT);
             $preparedRequest->bindValue('photo', $_POST['photo'], PDO::PARAM_INT);
