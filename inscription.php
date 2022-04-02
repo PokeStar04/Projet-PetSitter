@@ -16,7 +16,7 @@ if (!empty($_POST)) {
 
         $nom = htmlspecialchars(ucfirst(trim($_POST['nom'])));
         $prenom = htmlspecialchars(ucfirst(trim($_POST['prenom'])));
-        $naissance = htmlspecialchars(trim($_POST['naissance']));
+        $naissance = strtotime(str_replace('/', '-', trim($_POST['naissance']))); // https://www.php.net/manual/fr/function.strtotime.php
         $mail = htmlspecialchars(trim($_POST['mail']));
         $telephone = htmlspecialchars(trim($_POST['telephone']));
         $photo = htmlspecialchars(trim($_POST['photo']));
