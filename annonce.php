@@ -22,15 +22,15 @@ include_once('./require.php');
                 $preparedRequest = $DB->prepare('UPDATE annonce SET horaire = :horaire, startDate = :startDate, endDate = :endDate, note = :note, actif = :actif WHERE id = :id');
 
                 $preparedRequest->bindValue('horaire', $_POST['horaire'], PDO::PARAM_INT);
-                $preparedRequest->bindValue('startDate', strtotime(str_replace('/', '-', trim($_POST['startDate']))), PDO::PARAM_INT);
-                $preparedRequest->bindValue('endDate', strtotime(str_replace('/', '-', trim($_POST['endDate']))), PDO::PARAM_INT);
+                $preparedRequest->bindValue('startDate', strtotime(str_replace('/', '-', trim($_POST['startDate']))) );
+                $preparedRequest->bindValue('endDate', strtotime(str_replace('/', '-', trim($_POST['endDate']))) );
                 $preparedRequest->bindValue('note', $_POST['note'], PDO::PARAM_INT);
                 $preparedRequest->bindValue('actif', $_POST['actif'], PDO::PARAM_BOOL);
                 $preparedRequest->bindValue('id', $_GET['id'], PDO::PARAM_INT);
 
                 extract($_POST);
 
-                // header('Location: voirAnnonce.php');
+                header('Location: voirAnnonce.php');
             } else {
                 $horaire = $data['horaire'];
                 $startDate = $data['startDate'];
@@ -46,12 +46,14 @@ include_once('./require.php');
                 $preparedRequest = $DB->prepare('INSERT INTO annonce (horaire,startDate, endDate,note,actif,userID) VALUES (:horaire,:startDate, :endDate,:note,:actif,:userID)');
 
                 $preparedRequest->bindValue('horaire', $_POST['horaire'], PDO::PARAM_INT);
-                $preparedRequest->bindValue('startDate', strtotime(str_replace('/', '-', trim($_POST['startDate']))), PDO::PARAM_INT);
-                $preparedRequest->bindValue('endDate', strtotime(str_replace('/', '-', trim($_POST['endDate']))), PDO::PARAM_INT);
+                $preparedRequest->bindValue('startDate', strtotime(str_replace('/', '-', trim($_POST['startDate']))) );
+                $preparedRequest->bindValue('endDate', strtotime(str_replace('/', '-', trim($_POST['endDate']))) );
                 $preparedRequest->bindValue('note', $_POST['note'], PDO::PARAM_INT);
                 $preparedRequest->bindValue('actif', $_POST['actif'], PDO::PARAM_BOOL);
                 $preparedRequest->bindValue('userID', $_SESSION['id'], PDO::PARAM_INT);
                 $preparedRequest->execute();
+
+                header('Location: voirAnnonce.php');
             }
         }
     }
