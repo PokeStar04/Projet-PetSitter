@@ -30,7 +30,7 @@ if($result['id'] !== $_GET['id']) {
 	require_once('./_head/link.php');
 	?>
 
-	<title>Petsitter</title>
+	<title>Voir le profil de <?php echo $result['prenom'] . ' ' . $result['nom'] ?> — Petsitter</title>
 	<link href="/style/profil-petsitter.css" rel="stylesheet">
 </head>
 
