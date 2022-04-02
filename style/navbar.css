@@ -1,17 +1,25 @@
-.navbar{
+.header {
     display: flex;
     justify-content: space-between;
     width: 100%;
     z-index: 10;
 }
 
-.logo{
-    flex: 1;
+.navbar {
+    flex: 2;
+    align-items: center;
+    display: flex;
+    justify-content: center;
 }
 
-div a {
-    flex: 2;
+.navbar a {
+    color: white;
+    flex: 1;
     display: flex;
     justify-content: space-evenly;
     gap: 5px;
+}
+
+.logo {
+    flex: 1;
 }

@@ -68,7 +68,9 @@ if (isset($_SESSION['id'])) {
                 <p>Disponible du <?php echo date( 'd/m/Y', $annonce['startDate'] ) ?> au <?php echo date( 'd/m/Y', $annonce['endDate'] ) ?> à <?php echo $annonce['horaire'] ?>h pour <?php echo $annonce['garder'] ? 'garder, ' : null ?> <?php echo $annonce['nourrir'] ? 'nourrir, ' : null ?> <?php echo $annonce['promener'] ? 'promener' : null ?></p>
                 <p class="lightgrey_txt">Tarif : 10€/jour</p>
                 <p class="lightgrey_txt">Note : <?php echo $annonce['note'] ?>/5</p>
-                <button class="white_txt font_raleway_regular_15px">Consulter le profil</button>
+                <a href='profil.php?id=<?php echo $annonce['userID'] ?>'>
+                    <button class="white_txt font_raleway_regular_15px">Consulter le profil</button>
+                </a>
 
 
             </div>
