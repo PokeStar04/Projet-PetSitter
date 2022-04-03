@@ -1,75 +1,126 @@
 <?php
 include_once('./require.php');
 
-    if (!isset($_SESSION['id'])) {
-        header('Location: connexion.php');
-        exit;
-    }
+if (!isset($_SESSION['id'])) {
+    header('Location: connexion.php');
+    exit;
+}
 
-    $modifierAnnonce = false;
-    if(isset($_GET['id']) && isset($_SESSION['id'])){ // Create / Update (CRUD)
-        $preparedRequest = $DB->prepare('SELECT * FROM annonce WHERE id = :id');
-        $preparedRequest->bindValue('id', $_GET['id'], PDO::PARAM_INT);
-        $preparedRequest->execute();
+$modifierAnnonce = false;
+if (isset($_GET['id']) && isset($_SESSION['id'])) { // Create / Update (CRUD)
+    $preparedRequest = $DB->prepare('SELECT * FROM annonce WHERE id = :id');
+    $preparedRequest->bindValue('id', $_GET['id'], PDO::PARAM_INT);
+    $preparedRequest->execute();
 
-        $data = $preparedRequest->fetch();
+    $data = $preparedRequest->fetch();
 
-        if($data['userID'] == $_SESSION['id']) {
-            // session is the author of the annonce
-            $modifierAnnonce = true;
+    if ($data['userID'] == $_SESSION['id']) {
+        // session is the author of the annonce
+        $modifierAnnonce = true;
 
-            if (!empty($_POST)) {
-                $preparedRequest = $DB->prepare('UPDATE annonce SET horaire = :horaire, startDate = :startDate, endDate = :endDate, note = :note, actif = :actif WHERE id = :id');
-
-                $preparedRequest->bindValue('horaire', $_POST['horaire'], PDO::PARAM_INT);
-                $preparedRequest->bindValue('startDate', strtotime(str_replace('/', '-', trim($_POST['startDate']))) );
-                $preparedRequest->bindValue('endDate', strtotime(str_replace('/', '-', trim($_POST['endDate']))) );
-                $preparedRequest->bindValue('note', $_POST['note'], PDO::PARAM_INT);
-                $preparedRequest->bindValue('actif', $_POST['actif'], PDO::PARAM_BOOL);
-                $preparedRequest->bindValue('id', $_GET['id'], PDO::PARAM_INT);
-
-                extract($_POST);
-
-                header('Location: voirAnnonce.php');
-            } else {
-                $horaire = $data['horaire'];
-                $startDate = $data['startDate'];
-                $endDate = $data['endDate'];
-                $note = $data['note'];
-                $actif = $data['actif'];
-            }
-        }
-
-    } else {
         if (!empty($_POST)) {
-            if (isset($_POST['createAnnonce'])) {
-                $preparedRequest = $DB->prepare('INSERT INTO annonce (horaire,startDate, endDate,note,actif,userID) VALUES (:horaire,:startDate, :endDate,:note,:actif,:userID)');
+            $preparedRequest = $DB->prepare('UPDATE annonce SET horaire = :horaire, startDate = :startDate, endDate = :endDate, note = :note, actif = :actif WHERE id = :id');
 
-                $preparedRequest->bindValue('horaire', $_POST['horaire'], PDO::PARAM_INT);
-                $preparedRequest->bindValue('startDate', strtotime(str_replace('/', '-', trim($_POST['startDate']))) );
-                $preparedRequest->bindValue('endDate', strtotime(str_replace('/', '-', trim($_POST['endDate']))) );
-                $preparedRequest->bindValue('note', $_POST['note'], PDO::PARAM_INT);
-                $preparedRequest->bindValue('actif', $_POST['actif'], PDO::PARAM_BOOL);
-                $preparedRequest->bindValue('userID', $_SESSION['id'], PDO::PARAM_INT);
-                $preparedRequest->execute();
+            $preparedRequest->bindValue('horaire', $_POST['horaire'], PDO::PARAM_INT);
+            $preparedRequest->bindValue('startDate', strtotime(str_replace('/', '-', trim($_POST['startDate']))));
+            $preparedRequest->bindValue('endDate', strtotime(str_replace('/', '-', trim($_POST['endDate']))));
+            $preparedRequest->bindValue('note', $_POST['note'], PDO::PARAM_INT);
+            $preparedRequest->bindValue('actif', $_POST['actif'], PDO::PARAM_BOOL);
+            $preparedRequest->bindValue('id', $_GET['id'], PDO::PARAM_INT);
 
-                header('Location: voirAnnonce.php');
-                $preparedRequest2 = $DB->prepare('INSERT INTO animaux (chien, chat, lapin, rongeur, furet, herisson, aquarium, oiseaux, reptiles, userID) VALUES (:chien, :chat, :lapin, :rongeur, :furet, :herisson, :aquarium, :oiseaux, :reptiles,  :userID)');
-                
-                $preparedRequest2->bindValue('chien', $_POST['chien'], PDO::PARAM_BOOL);
-                $preparedRequest2->bindValue('chat', $_POST['chat'], PDO::PARAM_BOOL);
-                $preparedRequest2->bindValue('lapin', $_POST['lapin'], PDO::PARAM_BOOL);
-                $preparedRequest2->bindValue('rongeur', $_POST['rongeur'], PDO::PARAM_BOOL);
-                $preparedRequest2->bindValue('furet', $_POST['furet'], PDO::PARAM_BOOL);
-                $preparedRequest2->bindValue('herisson', $_POST['herisson'], PDO::PARAM_BOOL);
-                $preparedRequest2->bindValue('aquarium', $_POST['aquarium'], PDO::PARAM_BOOL);
-                $preparedRequest2->bindValue('oiseaux', $_POST['oiseaux'], PDO::PARAM_BOOL);
-                $preparedRequest2->bindValue('reptiles', $_POST['reptiles'], PDO::PARAM_BOOL);
-                $preparedRequest2->bindValue('userID', $_SESSION['id'], PDO::PARAM_INT);
-                $preparedRequest2->execute();
-            }
+            extract($_POST);
+
+            header('Location: voirAnnonce.php');
+        } else {
+            $horaire = $data['horaire'];
+            $startDate = $data['startDate'];
+            $endDate = $data['endDate'];
+            $note = $data['note'];
+            $actif = $data['actif'];
         }
     }
+} else {
+    if (!empty($_POST)) {
+        if (isset($_POST['createAnnonce'])) {
+            $preparedRequest = $DB->prepare('INSERT INTO annonce (horaire,startDate, endDate,note,actif,userID) VALUES (:horaire,:startDate, :endDate,:note,:actif,:userID)');
+
+            $preparedRequest->bindValue('horaire', $_POST['horaire'], PDO::PARAM_INT);
+            $preparedRequest->bindValue('startDate', strtotime(str_replace('/', '-', trim($_POST['startDate']))));
+            $preparedRequest->bindValue('endDate', strtotime(str_replace('/', '-', trim($_POST['endDate']))));
+            $preparedRequest->bindValue('note', $_POST['note'], PDO::PARAM_INT);
+            $preparedRequest->bindValue('actif', $_POST['actif'], PDO::PARAM_BOOL);
+            $preparedRequest->bindValue('userID', $_SESSION['id'], PDO::PARAM_INT);
+            $preparedRequest->execute();
+
+            header('Location: voirAnnonce.php');
+            $preparedRequest2 = $DB->prepare('INSERT INTO animaux (chien, chat, lapin, rongeur, furet, herisson, aquarium, oiseaux, reptiles, userID) VALUES (:chien, :chat, :lapin, :rongeur, :furet, :herisson, :aquarium, :oiseaux, :reptiles,  :userID)');
+            if (isset($_POST['chien'])) {
+                $preparedRequest2->bindValue('chien', $_POST['chien'], PDO::PARAM_BOOL);
+            } else {
+
+                $preparedRequest2->bindValue('chien', 0, PDO::PARAM_BOOL);
+            }
+
+            if (isset($_POST['chat'])) {
+                $preparedRequest2->bindValue('chat', $_POST['chat'], PDO::PARAM_BOOL);
+            } else {
+
+                $preparedRequest2->bindValue('chat', 0, PDO::PARAM_BOOL);
+            }
+
+            if (isset($_POST['lapin'])) {
+                $preparedRequest2->bindValue('lapin', $_POST['lapin'], PDO::PARAM_BOOL);
+            } else {
+
+                $preparedRequest2->bindValue('lapin', 0, PDO::PARAM_BOOL);
+            }
+
+            if (isset($_POST['rongeur'])) {
+                $preparedRequest2->bindValue('rongeur', $_POST['rongeur'], PDO::PARAM_BOOL);
+            } else {
+
+                $preparedRequest2->bindValue('rongeur', 0, PDO::PARAM_BOOL);
+            }
+
+            if (isset($_POST['furet'])) {
+                $preparedRequest2->bindValue('furet', $_POST['furet'], PDO::PARAM_BOOL);
+            } else {
+
+                $preparedRequest2->bindValue('furet', 0, PDO::PARAM_BOOL);
+            }
+
+            if (isset($_POST['herisson'])) {
+                $preparedRequest2->bindValue('herisson', $_POST['herisson'], PDO::PARAM_BOOL);
+            } else {
+
+                $preparedRequest2->bindValue('herisson', 0, PDO::PARAM_BOOL);
+            }
+
+            if (isset($_POST['aquarium'])) {
+                $preparedRequest2->bindValue('aquarium', $_POST['aquarium'], PDO::PARAM_BOOL);
+            } else {
+
+                $preparedRequest2->bindValue('aquarium', 0, PDO::PARAM_BOOL);
+            }
+            if (isset($_POST['oiseaux'])) {
+
+                $preparedRequest2->bindValue('oiseaux', $_POST['oiseaux'], PDO::PARAM_BOOL);
+            } else {
+
+                $preparedRequest2->bindValue('oiseaux', 0, PDO::PARAM_BOOL);
+            }
+
+            if (isset($_POST['reptiles'])) {
+                $preparedRequest2->bindValue('reptiles', $_POST['reptiles'], PDO::PARAM_BOOL);
+            } else {
+
+                $preparedRequest2->bindValue('reptiles', 0, PDO::PARAM_BOOL);
+            }
+            $preparedRequest2->bindValue('userID', $_SESSION['id'], PDO::PARAM_INT);
+            $preparedRequest2->execute();
+        }
+    }
+}
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -91,16 +142,16 @@ include_once('./require.php');
         <div class="row">
             <div class="col-3">&nbsp;</div>
             <div class="col-7">
-                <?php 
-                    if($modifierAnnonce):
-                ?>
-                <h3 class="font_raleway_regular_25px">Je modifie mon annonce</h3>
                 <?php
-                    else:
+                if ($modifierAnnonce) :
                 ?>
-                <h3 class="font_raleway_regular_25px">Je crée mon annonce</h3>
+                    <h3 class="font_raleway_regular_25px">Je modifie mon annonce</h3>
                 <?php
-                    endif;
+                else :
+                ?>
+                    <h3 class="font_raleway_regular_25px">Je crée mon annonce</h3>
+                <?php
+                endif;
                 ?>
 
                 <form method="post">
@@ -148,31 +199,31 @@ include_once('./require.php');
                     <div class="row services">
                         <div class="font_raleway_regular_15px green_txt">
                             <div class="col-12">
-                             
+
                                 <input type="checkbox" name="chien" placeholder="chien" value="chien">
                                 <label>Chien &nbsp&nbsp&nbsp</label>
-                               
+
                                 <input type="checkbox" name="chat" placeholder="chat" value="chat">
                                 <label>Chat &nbsp&nbsp&nbsp</label>
-                                
+
                                 <input type="checkbox" name="lapin" placeholder="lapin" value="lapin">
                                 <label>Lapin &nbsp&nbsp&nbsp</label></br>
-                         
+
                                 <input type="checkbox" name="rongeur" placeholder="rongeur" value="rongeur">
                                 <label>Rongeur &nbsp&nbsp&nbsp</label>
-                             
+
                                 <input type="checkbox" name="furet" placeholder="furet" value="furet">
                                 <label>Furet &nbsp&nbsp&nbsp</label>
-                             
+
                                 <input type="checkbox" name="herisson" placeholder="herisson" value="herisson">
                                 <label>Hérisson &nbsp&nbsp&nbsp</label></br>
-                              
+
                                 <input type="checkbox" name="aquarium" placeholder="aquarium" value="aquarium">
                                 <label>Aquarium &nbsp&nbsp&nbsp</label>
-                               
+
                                 <input type="checkbox" name="oiseaux" placeholder="oiseaux" value="oiseaux">
                                 <label>Oiseaux &nbsp&nbsp&nbsp</label>
-                      
+
                                 <input type="checkbox" name="reptiles" placeholder="reptiles" value="reptiles">
                                 <label>Reptiles &nbsp&nbsp&nbsp</label></br>
 
@@ -187,7 +238,7 @@ include_once('./require.php');
                             </div>
                         </div>
                     </div>
-                    
+
                 </form>
 
             </div>
