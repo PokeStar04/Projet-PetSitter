@@ -198,36 +198,38 @@ if (isset($_GET['id']) && isset($_SESSION['id'])) { // Create / Update (CRUD)
                     </div>
                     <div class="row services">
                         <div class="font_raleway_regular_15px green_txt">
-                            <div class="col-12">
+                            <div class="col-12 lightgrey_txt">                            
+                                <label>Choisissez les animaux que vous pouvez garder :</label>
+                            </div>
+                            <div class="col-6">
 
-                                <input type="checkbox" name="chien" placeholder="chien" value="chien">
-                                <label>Chien &nbsp&nbsp&nbsp</label>
+                                <input type="checkbox" id="chien" name="chien" placeholder="chien" value="chien">
+                                <label for="chien">Chien</label><br>
 
-                                <input type="checkbox" name="chat" placeholder="chat" value="chat">
-                                <label>Chat &nbsp&nbsp&nbsp</label>
+                                <input type="checkbox" id="chat" name="chat" placeholder="chat" value="chat">
+                                <label for="chat">Chat</label><br>
 
-                                <input type="checkbox" name="lapin" placeholder="lapin" value="lapin">
-                                <label>Lapin &nbsp&nbsp&nbsp</label></br>
+                                <input type="checkbox" id="lapin" name="lapin" placeholder="lapin" value="lapin">
+                                <label for="lapin">Lapin</label><br>
 
-                                <input type="checkbox" name="rongeur" placeholder="rongeur" value="rongeur">
-                                <label>Rongeur &nbsp&nbsp&nbsp</label>
+                                <input type="checkbox" id="rongeur" name="rongeur" placeholder="rongeur" value="rongeur">
+                                <label for="rongeur">Rongeur</label><br>
 
-                                <input type="checkbox" name="furet" placeholder="furet" value="furet">
-                                <label>Furet &nbsp&nbsp&nbsp</label>
+                                <input type="checkbox" id="furet" name="furet" placeholder="furet" value="furet">
+                                <label for="furet">Furet</label><br>
+                            </div>
+                            <div class="col-6">
+                                <input type="checkbox" id="herisson" name="herisson" placeholder="herisson" value="herisson">
+                                <label for="herisson">Hérisson</label><br>
 
-                                <input type="checkbox" name="herisson" placeholder="herisson" value="herisson">
-                                <label>Hérisson &nbsp&nbsp&nbsp</label></br>
+                                <input type="checkbox" id="aquarium" name="aquarium" placeholder="aquarium" value="aquarium">
+                                <label for="aquarium">Aquarium</label><br>
 
-                                <input type="checkbox" name="aquarium" placeholder="aquarium" value="aquarium">
-                                <label>Aquarium &nbsp&nbsp&nbsp</label>
+                                <input type="checkbox" id="oiseaux" name="oiseaux" placeholder="oiseaux" value="oiseaux">
+                                <label for="oiseaux">Oiseaux</label><br>
 
-                                <input type="checkbox" name="oiseaux" placeholder="oiseaux" value="oiseaux">
-                                <label>Oiseaux &nbsp&nbsp&nbsp</label>
-
-                                <input type="checkbox" name="reptiles" placeholder="reptiles" value="reptiles">
-                                <label>Reptiles &nbsp&nbsp&nbsp</label></br>
-
-                                <label for="actif" value="<?php if (isset($actif)) echo $actif; ?>">Animaux choisie?</label>
+                                <input type="checkbox" id="reptiles" name="reptiles" placeholder="reptiles" value="reptiles">
+                                <label for="reptiles">Reptiles</label><br>
                             </div>
                         </div>
                     </div>
