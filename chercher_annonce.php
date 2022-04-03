@@ -109,55 +109,9 @@ require_once('./_head/script.php');
 
 
 
-
-
-$sql = "SELECT * FROM `garder` WHERE ".$_POST['service']."=1";
-$query = $DB->prepare($sql);
-$query->execute();
-$result = $query->fetchAll(PDO::FETCH_ASSOC);
-echo "je suis ".$nourrir;
-
-
-if (($_POST['service']) == 'promener'){
-    
-    foreach($result as $info){
-        $annonce = 'SELECT * FROM `annonce` WHERE userID IN (SELECT userID FROM garder WHERE `promener`="1")';
-        $query = $DB->prepare($annonce);
-        $query->execute();
-        $result = $query->fetchAll(PDO::FETCH_ASSOC);
-     
-        ?> <br><br><?php
-    }
-    var_dump ($result);
-}
-elseif (($_POST['service']) == 'nourrir'){
-    foreach($result as $info){
-        $annonce = 'SELECT * FROM `annonce` WHERE userID IN (SELECT userID FROM garder WHERE `nourrir`="1")';
-        $query = $DB->prepare($annonce);
-        $query->execute();
-        $result = $query->fetchAll(PDO::FETCH_ASSOC);
-     
-        ?> <br><br><?php
-    }
-    var_dump ($result);
-}
-elseif (($_POST['service']) == 'garder'){
-    foreach($result as $info){
-        $annonce = 'SELECT * FROM `annonce` WHERE userID IN (SELECT userID FROM garder WHERE `garder`="1")';
-        $query = $DB->prepare($annonce);
-        $query->execute();
-        $result = $query->fetchAll(PDO::FETCH_ASSOC);
-     
-        ?> <br><br><?php
-    }
-    var_dump ($result);
-}
-else{
-    echo "cocher une case";
-}
 //Je fais ma requete
 // Ma boucle d'affichage
-var_dump($_POST['service']);
+
 
 //animaux
 
@@ -256,8 +210,14 @@ else{
 //  echo $chien;
 
 
+//
+//
+//
 
 
+
+$tab = array();
+print_r($tab);
 
 
 ?>
@@ -296,19 +256,22 @@ else{
 <input type="search" name="endDate" placeholder="endDate"></br> -->
 
 <!--garder  -->
-<label>Promener</label>
-<input class="nourrir" type="radio" name="service" placeholder="promener" value="promener">
+
 <label>Nourrir</label>
-<input class="promener" type="radio" name="service" placeholder="nourrir" value="<?php isset($_POST['service']) ? $nourrir = 1 : $nourrir = 0   ?>">
+<input class="nourrir" type="radio" name="service" placeholder="nourrir" value="nourrir">
+<label>promen</label>
+<input class="promener" type="radio" name="service" placeholder="promener" value="promener">
 <label>Garder</label>
 <input class="garder" type="radio" name="service" placeholder="garder" value="garder"></br>
+
 </br>
+
 
 <!-- animaux -->
 <label>Chien</label>
 <input type="checkbox" name="chien" placeholder="chien"  value="<?php  isset($_POST['chien']) ? $chien = 1 : $chien=0?>">
 <label>Chat</label>
-<input type="checkbox" name="chat" placeholder="chat" value="<?php  isset($_POST['chat']) ? $chat = 1 : $chat=0?>">
+<input type="checkbox" name="chat" placeholder="chat" value="<?php  isset($_POST['chat']) ? $chat = 1: $chat=0?>">
 <label>Lapin</label>
 <input type="checkbox" name="lapin" placeholder="lapin" value="<?php  isset($_POST['lapin']) ? $lapin = 1 : $lapin=0?>">
 </br>
@@ -335,30 +298,32 @@ else{
 $pays = $_POST['pays'];
 $postal = $_POST['postal'];
 //utilisateur
+$service=$_POST['service'];
 
-echo "je suis " .$ab ."sqdqks,dkq,d";
+echo "je suis ".$chien.$chien."ezeé";
 $startDate=strtotime(str_replace('/', '-', trim($_POST['startDate'])));
 $endDate=strtotime(str_replace('/', '-', trim($_POST['endDate'])));
 echo $startDate.$endDate;
 
-if (isset($_POST['pays']) && (!empty($_POST['pays'])) && isset($_POST['postal']) && (!empty($_POST['postal'])) && isset($startDate) && (!empty($startDate)) && isset($endDate) && (!empty($endDate)) ){
-    
+if (isset($_POST['pays']) && (!empty($_POST['pays'])) && isset($_POST['postal']) && (!empty($_POST['postal'])) && isset($startDate) && (!empty($startDate)) && isset($endDate) && (!empty($endDate))  ){
+    echo $service;
     ?><a></br></a><?php
 
  
-   
+  
  
-
+    // seq = ()
+  
 
 
         //$annonce = "SELECT * FROM annonce WHERE userID IN (SELECT id FROM utilisateur WHERE pays LIKE  '%" .$_POST['pays']."%' AND postal LIKE '%".$_POST['postal']."%') ";
-        $annonce = "SELECT * FROM annonce garder WHERE userID IN (SELECT id FROM utilisateur WHERE pays LIKE  '%" .$_POST['pays']."%') AND (startDate BETWEEN ( $startDate - 1209600) AND $startDate ) AND (endDate BETWEEN $endDate  AND ($endDate + 1209600))  AND actif = 1 ";//AND note > 133
-
+        $annonce = "SELECT * FROM annonce LEFT JOIN garder ON annonce.garder_ID = garder.id LEFT JOIN animaux ON annonce.animaux_id = animaux.id  WHERE userID IN (SELECT id FROM utilisateur WHERE pays LIKE  '%" .$_POST['pays']."%') AND (startDate BETWEEN ( $startDate - 1209600) AND $startDate ) AND (endDate BETWEEN $endDate  AND ($endDate + 1209600))   AND actif = 1 AND $service = 1 AND chien= 1 ";//AND note > 133
         $query = $DB->prepare($annonce);
         $query->execute();
         $result1 = $query->fetchAll(PDO::FETCH_ASSOC);
     
     var_dump($result1);
+
     // foreach($result as $geo){
 
     //     $annonce = "SELECT * FROM `annonce` WHERE userID IN (SELECT id FROM `utilisateur` WHERE postal LIKE '%" .$_POST['postal']."%')";
@@ -366,7 +331,11 @@ if (isset($_POST['pays']) && (!empty($_POST['pays'])) && isset($_POST['postal'])
     //     $query = $DB->prepare($annonce);
     //     $query->execute();
     //     $result = $query->fetchAll(PDO::FETCH_ASSOC);
+        // foreach($result1 as $info){
+        //         i
 
+
+        // }
 
 
     // }
@@ -376,15 +345,16 @@ else{
     echo ("mettre les informations");
 }
 
-echo "je sui " .$chien."<br>";
-$preparedRequest3= "SELECT * FROM animaux WHERE chien = $chien AND chat = $chat AND lapin = $lapin ";
-$querry1=$DB->prepare($preparedRequest3);
+// echo "je sui " .$chien."<br>";
+// $preparedRequest3= "SELECT * FROM animaux WHERE chien = $chien AND chat = $chat AND lapin = $lapin ";
+// $querry1=$DB->prepare($preparedRequest3);
 
-$querry1->execute();
-$resu1 = $querry1->fetchAll(PDO::FETCH_ASSOC);
-var_dump($resu1);
+// $querry1->execute();
+// $resu1 = $querry1->fetchAll(PDO::FETCH_ASSOC);
+// var_dump($resu1);
 
-echo "je suis ".$nourrir;
+echo "je suis ".$service;
+print_r($tab);
 ?>
 <link href="style/datepicker.min.css" rel="stylesheet">
     <script src="script/datepicker-full.min.js"></script>
