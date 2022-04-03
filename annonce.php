@@ -42,81 +42,92 @@ if (isset($_GET['id']) && isset($_SESSION['id'])) { // Create / Update (CRUD)
 } else {
     if (!empty($_POST)) {
         if (isset($_POST['createAnnonce'])) {
-            $preparedRequest = $DB->prepare('INSERT INTO annonce (horaire,startDate, endDate,note,actif,userID) VALUES (:horaire,:startDate, :endDate,:note,:actif,:userID)');
 
-            $preparedRequest->bindValue('horaire', $_POST['horaire'], PDO::PARAM_INT);
-            $preparedRequest->bindValue('startDate', strtotime(str_replace('/', '-', trim($_POST['startDate']))));
-            $preparedRequest->bindValue('endDate', strtotime(str_replace('/', '-', trim($_POST['endDate']))));
-            $preparedRequest->bindValue('note', $_POST['note'], PDO::PARAM_INT);
-            $preparedRequest->bindValue('actif', $_POST['actif'], PDO::PARAM_BOOL);
-            $preparedRequest->bindValue('userID', $_SESSION['id'], PDO::PARAM_INT);
-            $preparedRequest->execute();
-
-            $preparedRequest2 = $DB->prepare('INSERT INTO animaux (chien, chat, lapin, rongeur, furet, herisson, aquarium, oiseaux, reptiles, userID) VALUES (:chien, :chat, :lapin, :rongeur, :furet, :herisson, :aquarium, :oiseaux, :reptiles,  :userID)');
+            $preparedRequest = $DB->prepare('INSERT INTO animaux (chien, chat, lapin, rongeur, furet, herisson, aquarium, oiseaux, reptiles, userAnimauxID) VALUES (:chien, :chat, :lapin, :rongeur, :furet, :herisson, :aquarium, :oiseaux, :reptiles,  :userAnimauxID)');
             if (isset($_POST['chien'])) {
-                $preparedRequest2->bindValue('chien', $_POST['chien'], PDO::PARAM_BOOL);
+                $preparedRequest->bindValue('chien', $_POST['chien'], PDO::PARAM_BOOL);
             } else {
 
-                $preparedRequest2->bindValue('chien', 0, PDO::PARAM_BOOL);
+                $preparedRequest->bindValue('chien', 0, PDO::PARAM_BOOL);
             }
 
             if (isset($_POST['chat'])) {
-                $preparedRequest2->bindValue('chat', $_POST['chat'], PDO::PARAM_BOOL);
+                $preparedRequest->bindValue('chat', $_POST['chat'], PDO::PARAM_BOOL);
             } else {
 
-                $preparedRequest2->bindValue('chat', 0, PDO::PARAM_BOOL);
+                $preparedRequest->bindValue('chat', 0, PDO::PARAM_BOOL);
             }
 
             if (isset($_POST['lapin'])) {
-                $preparedRequest2->bindValue('lapin', $_POST['lapin'], PDO::PARAM_BOOL);
+                $preparedRequest->bindValue('lapin', $_POST['lapin'], PDO::PARAM_BOOL);
             } else {
 
-                $preparedRequest2->bindValue('lapin', 0, PDO::PARAM_BOOL);
+                $preparedRequest->bindValue('lapin', 0, PDO::PARAM_BOOL);
             }
 
             if (isset($_POST['rongeur'])) {
-                $preparedRequest2->bindValue('rongeur', $_POST['rongeur'], PDO::PARAM_BOOL);
+                $preparedRequest->bindValue('rongeur', $_POST['rongeur'], PDO::PARAM_BOOL);
             } else {
 
-                $preparedRequest2->bindValue('rongeur', 0, PDO::PARAM_BOOL);
+                $preparedRequest->bindValue('rongeur', 0, PDO::PARAM_BOOL);
             }
 
             if (isset($_POST['furet'])) {
-                $preparedRequest2->bindValue('furet', $_POST['furet'], PDO::PARAM_BOOL);
+                $preparedRequest->bindValue('furet', $_POST['furet'], PDO::PARAM_BOOL);
             } else {
 
-                $preparedRequest2->bindValue('furet', 0, PDO::PARAM_BOOL);
+                $preparedRequest->bindValue('furet', 0, PDO::PARAM_BOOL);
             }
 
             if (isset($_POST['herisson'])) {
-                $preparedRequest2->bindValue('herisson', $_POST['herisson'], PDO::PARAM_BOOL);
+                $preparedRequest->bindValue('herisson', $_POST['herisson'], PDO::PARAM_BOOL);
             } else {
 
-                $preparedRequest2->bindValue('herisson', 0, PDO::PARAM_BOOL);
+                $preparedRequest->bindValue('herisson', 0, PDO::PARAM_BOOL);
             }
 
             if (isset($_POST['aquarium'])) {
-                $preparedRequest2->bindValue('aquarium', $_POST['aquarium'], PDO::PARAM_BOOL);
+                $preparedRequest->bindValue('aquarium', $_POST['aquarium'], PDO::PARAM_BOOL);
             } else {
 
-                $preparedRequest2->bindValue('aquarium', 0, PDO::PARAM_BOOL);
+                $preparedRequest->bindValue('aquarium', 0, PDO::PARAM_BOOL);
             }
             if (isset($_POST['oiseaux'])) {
 
-                $preparedRequest2->bindValue('oiseaux', $_POST['oiseaux'], PDO::PARAM_BOOL);
+                $preparedRequest->bindValue('oiseaux', $_POST['oiseaux'], PDO::PARAM_BOOL);
             } else {
 
-                $preparedRequest2->bindValue('oiseaux', 0, PDO::PARAM_BOOL);
+                $preparedRequest->bindValue('oiseaux', 0, PDO::PARAM_BOOL);
             }
 
             if (isset($_POST['reptiles'])) {
-                $preparedRequest2->bindValue('reptiles', $_POST['reptiles'], PDO::PARAM_BOOL);
+                $preparedRequest->bindValue('reptiles', $_POST['reptiles'], PDO::PARAM_BOOL);
             } else {
 
-                $preparedRequest2->bindValue('reptiles', 0, PDO::PARAM_BOOL);
+                $preparedRequest->bindValue('reptiles', 0, PDO::PARAM_BOOL);
             }
+            $preparedRequest->bindValue('userAnimauxID', $_SESSION['id'], PDO::PARAM_INT);
+            $preparedRequest->execute();
+            $animaux_ID = $DB->lastInsertId();
+           
+           
+           
+           
+            $preparedRequest2 = $DB->prepare('INSERT INTO annonce (horaire,startDate, endDate,note,actif,userID,animaux_ID) VALUES (:horaire,:startDate, :endDate,:note,:actif,:userID,:animaux_ID)');
+
+            $preparedRequest2->bindValue('horaire', $_POST['horaire'], PDO::PARAM_INT);
+            $preparedRequest2->bindValue('startDate', strtotime(str_replace('/', '-', trim($_POST['startDate']))));
+            $preparedRequest2->bindValue('endDate', strtotime(str_replace('/', '-', trim($_POST['endDate']))));
+            $preparedRequest2->bindValue('note', $_POST['note'], PDO::PARAM_INT);
+            $preparedRequest2->bindValue('actif', $_POST['actif'], PDO::PARAM_BOOL);
             $preparedRequest2->bindValue('userID', $_SESSION['id'], PDO::PARAM_INT);
+            $preparedRequest2->bindValue('animaux_ID', $animaux_ID, PDO::PARAM_INT);
             $preparedRequest2->execute();
+
+           
+                           
+                            
+                            
 
             header('Location: voirAnnonce.php');
         }
