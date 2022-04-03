@@ -52,7 +52,6 @@ if (isset($_GET['id']) && isset($_SESSION['id'])) { // Create / Update (CRUD)
             $preparedRequest->bindValue('userID', $_SESSION['id'], PDO::PARAM_INT);
             $preparedRequest->execute();
 
-            header('Location: voirAnnonce.php');
             $preparedRequest2 = $DB->prepare('INSERT INTO animaux (chien, chat, lapin, rongeur, furet, herisson, aquarium, oiseaux, reptiles, userID) VALUES (:chien, :chat, :lapin, :rongeur, :furet, :herisson, :aquarium, :oiseaux, :reptiles,  :userID)');
             if (isset($_POST['chien'])) {
                 $preparedRequest2->bindValue('chien', $_POST['chien'], PDO::PARAM_BOOL);
@@ -118,6 +117,8 @@ if (isset($_GET['id']) && isset($_SESSION['id'])) { // Create / Update (CRUD)
             }
             $preparedRequest2->bindValue('userID', $_SESSION['id'], PDO::PARAM_INT);
             $preparedRequest2->execute();
+
+            header('Location: voirAnnonce.php');
         }
     }
 }
@@ -191,8 +192,8 @@ if (isset($_GET['id']) && isset($_SESSION['id'])) { // Create / Update (CRUD)
                     <div class="row services">
                         <div class="font_raleway_regular_15px green_txt">
                             <div class="col-12">
-                                <input type="checkbox" id="actif" name="actif" value="1">
-                                <label for="actif" value="<?php if (isset($actif)) echo $actif; ?>">Annonce active ?</label>
+                                <input type="checkbox" id="actif" name="actif" value="1"  <?php if (isset($actif)) echo 'checked'; ?>>
+                                <label for="actif">Annonce active ?</label>
                             </div>
                         </div>
                     </div>
@@ -236,7 +237,7 @@ if (isset($_GET['id']) && isset($_SESSION['id'])) { // Create / Update (CRUD)
                     <div class="row">
                         <div class="font_raleway_regular_15px green_txt">
                             <div class="col-12">
-                                <button type="submit" name="createAnnonce" class="white_txt font_raleway_regular_15px">Crée ton annonce</button>
+                                <button type="submit" name="createAnnonce" class="white_txt font_raleway_regular_15px"><?php if($modifierAnnonce) { echo 'Modifie ton annonce'; } else { echo 'Crée ton annonce'; } ?></button>
                             </div>
                         </div>
                     </div>
