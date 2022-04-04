@@ -9,6 +9,41 @@ if (isset($_SESSION['id'])) {
 if (!empty($_POST)) {
 
     $valid = (bool) true;
+    if(isset($_FILES['file'])){
+        $tmpName = $_FILES['file']['tmp_name'];
+        $name = $_FILES['file']['name'];
+        $size = $_FILES['file']['size'];
+        $error = $_FILES['file']['error'];
+    
+        $tabExtension = explode('.', $name);
+        $extension = strtolower(end($tabExtension));
+    
+        $extensions = ['jpg', 'png', 'jpeg', 'gif'];
+        $maxSize = 400000;
+    
+        if(in_array($extension, $extensions) && $size <= $maxSize && $error == 0){
+    
+            $uniqueName = uniqid('', true);
+            //uniqid génère quelque chose comme ca : 5f586bf96dcd38.73540086
+            $file = $uniqueName.".".$extension;
+            //$file = 5f586bf96dcd38.73540086.jpg
+    
+            move_uploaded_file($tmpName, './upload/'.$file);
+            echo $file;
+    
+            $req = $DB->prepare("INSERT INTO file (name) VALUES (?)");
+            $req->execute([$file]);
+    
+            echo "Image enregistrée";
+        }
+        else{
+            echo "Une erreur est survenue";
+        }
+    }
+
+    if (isset($_REQUEST['mdp'])){
+  
+        $mdp = password_hash(stripslashes($_REQUEST['mdp']), PASSWORD_DEFAULT);}
 
     if (isset($_POST['inscription'])) {
 
@@ -19,15 +54,16 @@ if (!empty($_POST)) {
         $naissance = strtotime(str_replace('/', '-', trim($_POST['naissance']))); // https://www.php.net/manual/fr/function.strtotime.php
         $mail = htmlspecialchars(trim($_POST['mail']));
         $telephone = htmlspecialchars(trim($_POST['telephone']));
-        $photo = htmlspecialchars(trim($_POST['photo']));
+        $photo = htmlspecialchars(trim($file));
         $pays = htmlspecialchars(trim($_POST['pays']));
         $postal = htmlspecialchars(trim($_POST['postal']));
         $ville = htmlspecialchars(ucfirst(trim($_POST['ville'])));
         $rue = htmlspecialchars(trim($_POST['rue']));
-        $mdp = htmlspecialchars(trim($_POST['mdp']));
+    
         $promener = htmlspecialchars(trim($_POST['promener']));
         $nourrir = htmlspecialchars(trim($_POST['nourrir']));
         $garder = htmlspecialchars(trim($_POST['garder']));
+        echo $file;
 
 
 
@@ -110,12 +146,12 @@ if (!empty($_POST)) {
             $preparedRequest->bindValue('naissance', $naissance);
             $preparedRequest->bindValue('mail', $_POST['mail'], PDO::PARAM_STR);
             $preparedRequest->bindValue('telephone', $_POST['telephone'], PDO::PARAM_INT);
-            $preparedRequest->bindValue('photo', $_POST['photo'], PDO::PARAM_INT);
+            $preparedRequest->bindValue('photo', $file, PDO::PARAM_STR);
             $preparedRequest->bindValue('pays', $_POST['pays'], PDO::PARAM_STR);
             $preparedRequest->bindValue('ville', $_POST['ville'], PDO::PARAM_STR);
             $preparedRequest->bindValue('postal', $_POST['postal'], PDO::PARAM_INT);
             $preparedRequest->bindValue('rue', $_POST['rue'], PDO::PARAM_INT);
-            $preparedRequest->bindValue('mdp', $_POST['mdp'], PDO::PARAM_STR);
+            $preparedRequest->bindValue(':mdp', $mdp, PDO::PARAM_STR);
 
             $preparedRequest->execute();
             $userID = $DB->lastInsertId();
@@ -160,7 +196,7 @@ if (!empty($_POST)) {
 
 <body>
     <?php require_once('./_nav/navigation.php') ?>
-    <form method="post" action="">
+    <form method="post" enctype="multipart/form-data">
         <div class="container">
             <div class="row">
                 <div class="col-3">&nbsp;</div>
@@ -218,8 +254,11 @@ if (!empty($_POST)) {
 
                     <div class="row font_raleway_regular_15px lightgrey_txt">
                         <div class="col-12">
-                            <label for="mdp">Mot de passe*</label><br />
-                            <input type="password" name="mdp" id="mdp" placeholder="mdp" class="champs full" value="<?php if (isset($mdp)) echo $mdp; ?>" required>
+                            <!-- <label for="mdp">Mot de passe*</label><br />
+                            <input type="password" class="box-input" name="password" placeholder="Mot de passe" required /> -->
+
+
+                            <input type="password" name="mdp" id="mdp" placeholder="Mot de Passe" class="champs full" required>
                         </div>
                     </div>
 
@@ -261,11 +300,9 @@ if (!empty($_POST)) {
 
                     <div class="row font_raleway_regular_15px lightgrey_txt">
                         <div class="col-12">
-                            <label for="photo">Photo de profil*</label><br />
-                            <input type="text" name="photo" id="photo" placeholder="photo" class="champs full" value="<?php if (isset($photo)) echo $photo; ?>" required>
-                            <?php if (isset($err_photo)) {
-                                echo $err_photo;
-                            } ?>
+                            <label for="file">Photo de profil*</label><br />
+                            <input type="file" name="file">
+                           
                         </div>
                     </div>
 
@@ -308,6 +345,10 @@ if (!empty($_POST)) {
 
 
     <?php
+
+
+
+
     require_once('./_footer/footer.php')
     ?>
     <link href="style/datepicker.min.css" rel="stylesheet">

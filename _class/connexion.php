@@ -41,16 +41,22 @@ class Connexion {
                 require_once('close.php');
                 //Si ma requete contient un information au niveau de mdp 
                 if(isset($req['mdp'])){
-                    if($mdp !== $req['mdp']){
-                        $this->valid=false; 
-                        $this->err_mail = "Cette adresse ou mot de passe est incorect";
-                    }
+                        if (!password_verify($mdp,$req['mdp'])){
+
+                                $this->valid=false; 
+                                $this->err_mail = "Cette adresse ou mot de passe est incorect";
+                        }
+
+
+                    // if($mdp !== $req['mdp']){
+                    //     
+                
                     
                     
                 }else{
                     $this->valid=false; 
                     $this->err_mail = "Cette adresse ou mot de passe est incorect";
-                    echo $req['mdp'];
+                   
                 }
     
     
