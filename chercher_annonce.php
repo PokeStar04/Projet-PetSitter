@@ -76,27 +76,6 @@ require_once('./_head/script.php');
     }
 
 
-//  $preparedRequest2 = $DB->prepare('SELECT chien, chat, lapin, rongeur, furet, herisson, aquarium, oiseaux, reptiles FROM animaux ');
- 
- 
-
-//  //$preparedRequest2->bindValue('userID', $_SESSION['id'], PDO::PARAM_INT);
- 
-//  $preparedRequest2->execute();
-//  $resu = $preparedRequest2->fetchAll(PDO::FETCH_ASSOC);
- //var_dump($resu);
-//    $chien = $_POST['chien'];
-//    echo "je suis un : .$chien.".var_dump($chien) ." poilu ";
-//  echo $chien;
-
-
-//
-//
-//
-
-
-
-
 
 ?>
 
@@ -184,32 +163,32 @@ require_once('./_head/script.php');
                             </div>
                             <div class="col-6">
 
-                                <input type="checkbox" id="chien" name="chien" placeholder="chien" value="1">
+                                <input type="checkbox" id="chien" name="chien" placeholder="chien" value="<?php  isset($_POST['chien']) ? $_POST['chien']=1 : $_POST['chien']=0  ?>">
                                 <label for="chien">Chien</label><br>
 
-                                <input type="checkbox" id="chat" name="chat" placeholder="chat" value="1">
+                                <input type="checkbox" id="chat" name="chat" placeholder="chat" alue="<?php  isset($_POST['chat']) ? $_POST['chat']=1 : $_POST['chat']=0  ?>"> 
                                 <label for="chat">Chat</label><br>
 
-                                <input type="checkbox" id="lapin" name="lapin" placeholder="lapin" value="<?php  isset($_POST['lapin']) ? $lapin = 1 : $lapin=0?>">
+                                <input type="checkbox" id="lapin" name="lapin" placeholder="lapin" value="<?php  isset($_POST['lapin']) ? $_POST['lapin']=1 : $_POST['lapin']=0  ?>"> 
                                 <label for="lapin">Lapin</label><br>
 
-                                <input type="checkbox" id="rongeur" name="rongeur" placeholder="rongeur" value="<?php  isset($_POST['rongeur']) ? $rongeur = 1 : $rongeur=0?>">
+                                <input type="checkbox" id="rongeur" name="rongeur" placeholder="rongeur" value="<?php  isset($_POST['rongeur']) ? $_POST['rongeur']=1 : $_POST['rongeur']=0  ?>"> 
                                 <label for="rongeur">Rongeur</label><br>
 
-                                <input type="checkbox" id="furet" name="furet" placeholder="furet" value="<?php  isset($_POST['furet']) ? $furet = 1 : $furet=0?>">
+                                <input type="checkbox" id="furet" name="furet" placeholder="furet" value="<?php  isset($_POST['furet']) ? $_POST['furet']=1 : $_POST['furet']=0  ?>"> 
                                 <label for="furet">Furet</label><br>
                             </div>
                             <div class="col-6">
-                                <input type="checkbox" id="herisson" name="herisson" placeholder="herisson" value="<?php  isset($_POST['herisson']) ? $herisson = 1 : $herisson=0?>">
+                                <input type="checkbox" id="herisson" name="herisson" placeholder="herisson" value="<?php  isset($_POST['herisson']) ? $_POST['herisson']=1 : $_POST['herisson']=0  ?>"> 
                                 <label for="herisson">Hérisson</label><br>
 
-                                <input type="checkbox" id="aquarium" name="aquarium" placeholder="aquarium" value="<?php  isset($_POST['aquarium']) ? $aquarium = 1 : $aquarium=0?>">
+                                <input type="checkbox" id="aquarium" name="aquarium" placeholder="aquarium" value="<?php  isset($_POST['aquarium']) ? $_POST['aquarium']=1 : $_POST['aquarium']=0  ?>"> 
                                 <label for="aquarium">Aquarium</label><br>
 
-                                <input type="checkbox" id="oiseaux" name="oiseaux" placeholder="oiseaux" value="<?php  isset($_POST['oiseaux']) ? $oiseaux = 1 : $oiseaux=0?>">
+                                <input type="checkbox" id="oiseaux" name="oiseaux" placeholder="oiseaux" value="<?php  isset($_POST['oiseaux']) ? $_POST['oiseaux']=1 : $_POST['oiseaux']=0  ?>"> 
                                 <label for="oiseaux">Oiseaux</label><br>
 
-                                <input type="checkbox" id="reptiles" name="reptiles" placeholder="reptiles" value="<?php  isset($_POST['reptiles']) ? $reptiles = 1 : $reptiles=0?>">
+                                <input type="checkbox" id="reptiles" name="reptiles" placeholder="reptiles"value="<?php  isset($_POST['reptiles']) ? $_POST['reptiles']=1 : $_POST['reptiles']=0  ?>"> 
                                 <label for="reptiles">Reptiles</label><br>
                             </div>
                         </div>
@@ -242,9 +221,14 @@ $pays = $_POST['pays'];
 $postal = $_POST['postal'];
 $chien =   $_POST['chien'];
 $chat =   $_POST['chat'];
-var_dump($_POST['chien']);
-echo $chien;
-    
+$lapin =   $_POST['lapin'];
+$rongeur =   $_POST['rongeur'];
+$furet =   $_POST['furet'];
+$herisson =   $_POST['herisson'];
+$aquarium =   $_POST['aquarium'];
+$oiseaux =   $_POST['oiseaux'];
+$reptiles =   $_POST['reptiles'];
+
 
 
 
@@ -264,15 +248,14 @@ if (isset($_POST['pays']) && (!empty($_POST['pays'])) && isset($_POST['postal'])
   
 
   
-        $annonce = "SELECT * FROM annonce  LEFT JOIN garder ON annonce.garder_ID = garder.id LEFT JOIN animaux ON annonce.animaux_id = animaux.id  WHERE userID IN (SELECT id FROM utilisateur WHERE pays LIKE  '%" .$_POST['pays']."%') AND (startDate BETWEEN ( $startDate - 1209600) AND $startDate ) AND (endDate BETWEEN $endDate  AND ($endDate + 1209600))   AND actif = 1 AND $service = 1 AND chien = $chien";//AND note > 133
+        $annonce = "SELECT * FROM annonce  LEFT JOIN garder ON annonce.garder_ID = garder.id LEFT JOIN animaux ON annonce.animaux_id = animaux.id  WHERE userID IN (SELECT id FROM utilisateur WHERE pays LIKE  '%" .$_POST['pays']."%') AND (startDate BETWEEN ( $startDate - 1209600) AND $startDate ) AND (endDate BETWEEN $endDate  AND ($endDate + 1209600))   AND actif = 1 AND $service = 1 AND chien = $chien AND chat = $chat AND lapin = $lapin AND rongeur = $rongeur AND furet=$furet AND herisson=$herisson AND aquarium=$aquarium AND oiseaux=$oiseaux AND reptiles=$reptiles";//AND note > 133
         $query = $DB->prepare($annonce);
         $query->execute();
+        $rows = $query->rowCount();
+        if($rows > 0){
+            
+       
         $infoRecherche = $query->fetchAll(PDO::FETCH_ASSOC);
-
-    
-
-
-
         foreach($infoRecherche as $info){
             $i = $info['userID'];
             $userInfo = "SELECT id,prenom,naissance,nom,photo FROM utilisateur WHERE id = $i ";
@@ -310,32 +293,15 @@ if (isset($_POST['pays']) && (!empty($_POST['pays'])) && isset($_POST['postal'])
         </div>
 
 
-
-
-
-
-        <?php }; ?>
+        <?php }; }else{
+            echo "Nous n'avons trouvers aucun pet sister correspondant à vos demandes";
+        }
+           
+        ?>
 
 <?php
-    // }
-    //var_dump ($result);
+   
  }
-else{
-    echo ("mettre les informations");
-}
-
-// echo "je sui " .$chien."<br>";
-// $preparedRequest3= "SELECT * FROM animaux WHERE chien = $chien AND chat = $chat AND lapin = $lapin ";
-// $querry1=$DB->prepare($preparedRequest3);
-
-// $querry1->execute();
-// $resu1 = $querry1->fetchAll(PDO::FETCH_ASSOC);
-// var_dump($resu1);
-
-
-
- 
-     
 }
 
 
@@ -349,14 +315,6 @@ else{
 
     
     </div></div>
-
-
-<!-- annonce -->
-<!-- <label>Début</label>
-<input type="search" name="startDate" placeholder="startDate"></br>
-<label>Fin</label>
-<input type="search" name="endDate" placeholder="endDate"></br> -->
-
 
 
 <link href="style/datepicker.min.css" rel="stylesheet">
