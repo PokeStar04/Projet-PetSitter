@@ -1,5 +1,6 @@
 <?php
 include_once('./require.php');
+session_start();
 
 if(isset($_SESSION['id'])){
     header('Location: /');
@@ -11,12 +12,6 @@ $var = 'Bonjour '. $_SESSION['prenom'].  $_SESSION['nom'];
 }else{
 $var = 'Bonjour à tous';
 }
-
-
-
-
-
-
 
 
 
@@ -38,9 +33,9 @@ require_once('./_head/script.php');
 
 ?>
 <link href="/style/resultats-style.css" rel="stylesheet">
-
-<link href="/style/chercher-annonce.css" rel="stylesheet">
 <link href="/style/formulaire.css" rel="stylesheet">
+<link href="/style/chercher-annonce.css" rel="stylesheet">
+
    <title>Document</title>
 </head>
 <body>
@@ -80,10 +75,7 @@ require_once('./_head/script.php');
         ?><a></br></a><?php
     }
 
-else{
-     ?>  
-     <a>choisissez un animal</a>    <?php
- }
+
 //  $preparedRequest2 = $DB->prepare('SELECT chien, chat, lapin, rongeur, furet, herisson, aquarium, oiseaux, reptiles FROM animaux ');
  
  
@@ -110,23 +102,244 @@ else{
 
 
 
-<h1> chercher une annonce </h1>
+
+
+    
+
+<form method="post" >
+        <div class="container">
+            <div class="row">
+                <div class="col-3">&nbsp;</div>
+
+                <div class="col-7">
+                    <h3 class="font_raleway_regular_25px">Trouve ton Petsitter idéale</h3>
+
+                    <div class="row font_raleway_regular_15px lightgrey_txt">
+                        <div class="col-4">
+                            <label for="pays">Pays*</label><br />
+                            <input type="text" name="pays" placeholder="pays" class="champs" value="<?php if (isset($pays)) echo $pays; ?>" required>
+                            <?php if (isset($err_pays)) {
+                                echo $err_pays;
+                            } ?>
+                        </div>
+                        <div class="col-1"></div>
+                        <div class="col-4">
+                            <label for="postal">Code Postal*</label><br />
+                            <input type="text" name="postal" id="postal" placeholder="postal" class="champs" value="<?php if (isset($postal)) echo $postal; ?>" required>
+                            <?php if (isset($postal)) {
+                                echo $postal;
+                            } ?>
+                        </div>
+                    </div>
+
+
+                    <div class="row font_raleway_regular_15px lightgrey_txt">
+                        <div class="col-12">
+                            <label for="startDate">Sur quelle période en avez-vous besoin ?</label>
+                        </div>
+                        <div id="range">
+                            <div class="col-4">
+                                <input type="text" name="startDate" id="startDate" class="champs" value="<?php if (isset($startDate)) echo $startDate; ?>">
+                            </div>
+
+                            <div class="col-1">
+                                <span class="lightgrey_txt">à</span>
+                            </div>
+
+                            <div class="col-4">
+                                <input type="text" name="endDate" class="champs" value="<?php if (isset($endDate)) echo $endDate; ?>">
+                            </div>
+                        </div>
+                    </div>
+
+                   
+
+                    <div class="row">
+                        <div class="col-12 font_raleway_regular_15px lightgrey_txt">
+                            <p>Je souhaite...*</p>
+                         
+                        </div>
+                    </div>
+
+                    <div class="row services">
+                        <div class="font_raleway_regular_15px green_txt">
+                            <div class="col-3">
+                                <input type="radio" id="nourrir" name="service" value="nourrir">
+                                <label for="nourrir">Nourrir</label>
+                            </div>
+                            <div class="col-3">
+                                <input type="radio" id="promener" name="service" value="promener">
+                                <label for="promener">Promener</label>
+                            </div>
+                            <div class="col-3">
+                                <input type="radio" id="garder" name="service" value="garder">
+                                <label for="garder">Garder</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row services">
+                        <div class="font_raleway_regular_15px green_txt">
+                            <div class="col-12 lightgrey_txt">                            
+                                <label>Choisissez les animaux que vous pouvez garder :</label>
+                            </div>
+                            <div class="col-6">
+
+                                <input type="checkbox" id="chien" name="chien" placeholder="chien" value="1">
+                                <label for="chien">Chien</label><br>
+
+                                <input type="checkbox" id="chat" name="chat" placeholder="chat" value="1">
+                                <label for="chat">Chat</label><br>
+
+                                <input type="checkbox" id="lapin" name="lapin" placeholder="lapin" value="<?php  isset($_POST['lapin']) ? $lapin = 1 : $lapin=0?>">
+                                <label for="lapin">Lapin</label><br>
+
+                                <input type="checkbox" id="rongeur" name="rongeur" placeholder="rongeur" value="<?php  isset($_POST['rongeur']) ? $rongeur = 1 : $rongeur=0?>">
+                                <label for="rongeur">Rongeur</label><br>
+
+                                <input type="checkbox" id="furet" name="furet" placeholder="furet" value="<?php  isset($_POST['furet']) ? $furet = 1 : $furet=0?>">
+                                <label for="furet">Furet</label><br>
+                            </div>
+                            <div class="col-6">
+                                <input type="checkbox" id="herisson" name="herisson" placeholder="herisson" value="<?php  isset($_POST['herisson']) ? $herisson = 1 : $herisson=0?>">
+                                <label for="herisson">Hérisson</label><br>
+
+                                <input type="checkbox" id="aquarium" name="aquarium" placeholder="aquarium" value="<?php  isset($_POST['aquarium']) ? $aquarium = 1 : $aquarium=0?>">
+                                <label for="aquarium">Aquarium</label><br>
+
+                                <input type="checkbox" id="oiseaux" name="oiseaux" placeholder="oiseaux" value="<?php  isset($_POST['oiseaux']) ? $oiseaux = 1 : $oiseaux=0?>">
+                                <label for="oiseaux">Oiseaux</label><br>
+
+                                <input type="checkbox" id="reptiles" name="reptiles" placeholder="reptiles" value="<?php  isset($_POST['reptiles']) ? $reptiles = 1 : $reptiles=0?>">
+                                <label for="reptiles">Reptiles</label><br>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-5">
+                            <button type="submit" name="submit" class="white_txt font_raleway_regular_15px">Trouver mon best petsitter</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-2"></div>
+            </div> <!-- /row -->
+        </div> <!-- /container -->
+    </form>
+
+
 <div class="container">
-
-
 
 <?php 
 
 if(isset($_POST) && (!empty($_POST))){
 
-    require_once('resultSearchAnnonce.php');
+
+
+// echo $chien.$chat.$lapin.$rongeur.$furet.$herisson.$aquarium.$oiseaux.$reptiles;
+
+$pays = $_POST['pays'];
+$postal = $_POST['postal'];
+$chien =   $_POST['chien'];
+$chat =   $_POST['chat'];
+var_dump($_POST['chien']);
+echo $chien;
+    
+
+
+
+
+$service=$_POST['service'];
+
+$startDate=strtotime(str_replace('/', '-', trim($_POST['startDate'])));
+$endDate=strtotime(str_replace('/', '-', trim($_POST['endDate'])));
+
+if (isset($_POST['pays']) && (!empty($_POST['pays'])) && isset($_POST['postal']) && (!empty($_POST['postal'])) && isset($startDate) && (!empty($startDate)) && isset($endDate) && (!empty($endDate))  ){
+  
+    ?><a></br></a><?php
+
+ 
+  
+ 
+  
+
+  
+        $annonce = "SELECT * FROM annonce  LEFT JOIN garder ON annonce.garder_ID = garder.id LEFT JOIN animaux ON annonce.animaux_id = animaux.id  WHERE userID IN (SELECT id FROM utilisateur WHERE pays LIKE  '%" .$_POST['pays']."%') AND (startDate BETWEEN ( $startDate - 1209600) AND $startDate ) AND (endDate BETWEEN $endDate  AND ($endDate + 1209600))   AND actif = 1 AND $service = 1 AND chien = $chien";//AND note > 133
+        $query = $DB->prepare($annonce);
+        $query->execute();
+        $infoRecherche = $query->fetchAll(PDO::FETCH_ASSOC);
+
+    
+
+
+
+        foreach($infoRecherche as $info){
+            $i = $info['userID'];
+            $userInfo = "SELECT id,prenom,naissance,nom,photo FROM utilisateur WHERE id = $i ";
+            $annonceInfo = $DB->prepare($userInfo);
+            $annonceInfo->execute();
+            $annonce = $annonceInfo->fetch(PDO::FETCH_ASSOC);
+           
+                ?>
+
+
+            <div class="row box font_raleway_regular_15px">
+             <div class="col-1">
+             
+             
+                 
+                                           <img class="img-rond-75" src="./upload/<?= $annonce['photo']?>">
+
+              
+                    
+               
+            </div>
+            <div class="col-11 info-petsitter">
+                <span class="yellow_txt"><?php echo $annonce['prenom'] ?>, <?php echo floor( (time() - $annonce['naissance']) / 31556926 ) // 31556926 = nb of seconds in a year ?> ans </span>
+                <p>“<?= $info['biographie']?> </p>
+                
+                <p>Disponible du <?php echo date( 'd/m/Y', $info['startDate'] ) ?> au <?= date( 'd/m/Y', $info['endDate'] ) ?> à <?= $info['horaire'] ?>h pour <?= $annonce['garder'] ? 'garder, ' : null ?> <?php echo $annonce['nourrir'] ? 'nourrir, ' : null ?> <?php echo $annonce['promener'] ? 'promener' : null ?></p>
+                <p class="lightgrey_txt">Tarif : <?=$info['prix']?>€/jour</p>
+                <p class="lightgrey_txt">Note : <?php echo $annonce['note'] ?>/5</p>
+                <a href='profil.php?id=<?php echo $annonce['id'] ?>'>
+                    <button class="white_txt font_raleway_regular_15px">Consulter le profil</button>
+                </a>
+
+
+            </div>
+        </div>
+
+
+
+
+
+
+        <?php }; ?>
+
+<?php
+    // }
+    //var_dump ($result);
+ }
+else{
+    echo ("mettre les informations");
 }
 
+// echo "je sui " .$chien."<br>";
+// $preparedRequest3= "SELECT * FROM animaux WHERE chien = $chien AND chat = $chat AND lapin = $lapin ";
+// $querry1=$DB->prepare($preparedRequest3);
 
-else{ 
-require_once('userSearchAnnonce.php');
+// $querry1->execute();
+// $resu1 = $querry1->fetchAll(PDO::FETCH_ASSOC);
+// var_dump($resu1);
+
+
+
+ 
      
 }
+
+
+
 
 ?>
 
@@ -135,7 +348,7 @@ require_once('userSearchAnnonce.php');
 
 
     
-    </div>
+    </div></div>
 
 
 <!-- annonce -->
@@ -155,6 +368,7 @@ require_once('userSearchAnnonce.php');
             format: 'dd/mm/yyyy'
         })
     </script>
+
 </br>
 </br>
 </br>

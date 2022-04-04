@@ -1,11 +1,11 @@
 
-<form method="post" action="">
+<form method="post" >
         <div class="container">
             <div class="row">
                 <div class="col-3">&nbsp;</div>
 
                 <div class="col-7">
-                    <h3 class="font_raleway_regular_25px">Rejoins la famille des Petsitter</h3>
+                    <h3 class="font_raleway_regular_25px">Trouve ton Petsitter idéale</h3>
 
                     <div class="row font_raleway_regular_15px lightgrey_txt">
                         <div class="col-4">
@@ -77,7 +77,7 @@
                             </div>
                             <div class="col-6">
 
-                                <input type="checkbox" id="chien" name="chien" placeholder="chien" value="<?php  isset($_POST['chien']) ? $chien = 1 : $chien=0?>">
+                                <input type="checkbox" id="chien" name="chien" placeholder="chien" value="<?php  isset($_POST['chien']) ? $chien = 1000 : $chien=0?>">
                                 <label for="chien">Chien</label><br>
 
                                 <input type="checkbox" id="chat" name="chat" placeholder="chat" value="<?php  isset($_POST['chat']) ? $chat = 1: $chat=0?>">
