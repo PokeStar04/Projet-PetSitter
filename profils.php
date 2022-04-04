@@ -26,6 +26,14 @@ $commentaire = $profilCom->fetch(PDO::FETCH_ASSOC);
 // $postCom = $DB->prepare($petCom);
 // $postCom->execute();
 // $commentairePost = $postCom->fetch(PDO::FETCH_ASSOC);
+$query = $DB->prepare('
+	SELECT utilisateur.*, COUNT(annonce.id) AS nbAnnonces FROM utilisateur 
+	JOIN annonce ON annonce.userID = utilisateur.id 
+	WHERE utilisateur.id = :userid
+');
+$query->bindValue('userid', $_GET['id'], PDO::PARAM_INT);
+$query->execute();
+$result = $query->fetchAll(PDO::FETCH_ASSOC);
 
 ?>
 
@@ -53,6 +61,7 @@ $commentaire = $profilCom->fetch(PDO::FETCH_ASSOC);
 		<div class="row">
 			<div class="col-4 user ">
 				<div>
+
 					<img src="upload/<?php echo $user['photo'] ?>" style="margin-right:8px; width: 50px; height: 50px; border-radius: 50%;">
 				</div>
 
@@ -65,7 +74,7 @@ $commentaire = $profilCom->fetch(PDO::FETCH_ASSOC);
 			<div class="col-8">
 				<div class="row">
 					<div class="col-4">
-						<p class="font_raleway_bigtitle_50px yellow_txt"><?php echo $result['nbAnnonces']; ?></p>
+						<p class="font_raleway_bigtitle_50px yellow_txt"> 37<?php echo $result['nbAnnonces']; ?></p>
 						<p class="font_raleway_regular_15px">gardes confiées</p>
 					</div>
 					<div class="col-4">
@@ -96,15 +105,7 @@ $commentaire = $profilCom->fetch(PDO::FETCH_ASSOC);
 			<div class="col-12">
 				<span class="green_txt  font_raleway_regular_25px">Commentaires</span>
 				<?php		// Je récupére le nombre d'annonce poster
-					$query = $DB->prepare('
-						SELECT utilisateur.*, COUNT(annonce.id) AS nbAnnonces FROM utilisateur 
-						JOIN annonce ON annonce.userID = utilisateur.id 
-						WHERE utilisateur.id = :userid
-					');
-					$query->bindValue('userid', $_GET['id'], PDO::PARAM_INT);
-					$query->execute();
-					$result = $query->fetch(PDO::FETCH_ASSOC);
-
+					
 
 					//je créé mon tableau ou je stack les commentaires correspondant au profils
 
@@ -121,8 +122,8 @@ $commentaire = $profilCom->fetch(PDO::FETCH_ASSOC);
 						<div class="commentaires">
 							<div class="box-commentaires">
 								<div class="col-3-sm">
-									<img class="img-rond-75" src="./upload/<?php echo $annonce['photo'] ?>" style="margin-right:8px;">
-									<span class="font_raleway_regular_15px lightgrey_txt"> <?php echo $annonce ['prenom'] ?></span>
+									<img class="img-rond-75" src="./upload/<?php echo $info['photo'] ?>" style="margin-right:8px;">
+									<span class="font_raleway_regular_15px lightgrey_txt"> <?php echo $info['prenom'] ?></span>
 								</div>
 								<div class="col-9-sm">
 									<span class="font_raleway_regular_15px "><?php echo $commentaire['commentaire'] ?></span>

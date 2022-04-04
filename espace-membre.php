@@ -14,7 +14,7 @@ $query = $DB->prepare('
 $query->bindValue('userid', $_SESSION['id'], PDO::PARAM_INT);
 $query->execute();
 $results = $query->fetchAll(PDO::FETCH_ASSOC);
-var_dump($results);
+
 ?>
 <!DOCTYPE html>
 <html lang="fr">
