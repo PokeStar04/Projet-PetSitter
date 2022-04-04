@@ -123,13 +123,14 @@ if (isset($_SESSION['id'])) {
                 </div>
             </div>
         </div>
-    </div>
-
-
+   
     <?php
     require_once('./_footer/footer.php');
     require_once('./_head/script.php');
     ?>
+    </div>
+
+
     <script>
         const slider = document.querySelector('.slider')
 

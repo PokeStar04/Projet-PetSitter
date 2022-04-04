@@ -1,0 +1,7 @@
+.img-rond-75{
+    width : 75px; height : 75px;
+    border: none;
+    -moz-border-radius : 75px;
+    -webkit-border-radius : 75px;
+    border-radius : 75px;
+  }

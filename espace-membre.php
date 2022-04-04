@@ -8,12 +8,13 @@ if (!isset($_SESSION['id'])) {
 }
 
 $query = $DB->prepare('
-	SELECT * FROM annonce
+	SELECT * FROM annonce LEFT JOIN garder ON annonce.garder_id = garder.id
 	WHERE userID = :userid
 ');
 $query->bindValue('userid', $_SESSION['id'], PDO::PARAM_INT);
 $query->execute();
 $results = $query->fetchAll(PDO::FETCH_ASSOC);
+var_dump($results)
 ?>
 <!DOCTYPE html>
 <html lang="fr">

@@ -40,7 +40,7 @@ if($result['id'] !== $_GET['id']) {
 		<div class="row">
 			<div class="col-4 user ">
 				<div>
-					<img src="<?php echo $result['photo'] ?>" style="margin-right:8px;">
+					<img class="img-rond-75" src="./upload/<?php echo $result['photo'] ?>" style="margin-right:8px;">
 				</div>
 
 				<div>

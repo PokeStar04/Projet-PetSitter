@@ -14,29 +14,32 @@ if (isset($_GET['id']) && isset($_SESSION['id'])) { // Create / Update (CRUD)
 
     $data = $preparedRequest->fetch();
 
+
     if ($data['userID'] == $_SESSION['id']) {
         // session is the author of the annonce
         $modifierAnnonce = true;
 
         if (!empty($_POST)) {
-            $preparedRequest = $DB->prepare('UPDATE annonce SET horaire = :horaire, startDate = :startDate, endDate = :endDate, note = :note, actif = :actif WHERE id = :id');
-
+       
+            $preparedRequest = $DB->prepare('UPDATE annonce SET horaire = :horaire, startDate = :startDate, endDate = :endDate, actif = :actif ,biographie =:biographie  WHERE id = :id');
             $preparedRequest->bindValue('horaire', $_POST['horaire'], PDO::PARAM_INT);
             $preparedRequest->bindValue('startDate', strtotime(str_replace('/', '-', trim($_POST['startDate']))));
             $preparedRequest->bindValue('endDate', strtotime(str_replace('/', '-', trim($_POST['endDate']))));
-            $preparedRequest->bindValue('note', $_POST['note'], PDO::PARAM_INT);
+            // $preparedRequest->bindValue('note', $_POST['note'], PDO::PARAM_INT);
             $preparedRequest->bindValue('actif', $_POST['actif'], PDO::PARAM_BOOL);
+            $preparedRequest->bindValue('biographie', $_POST['biographie'], PDO::PARAM_STR);
             $preparedRequest->bindValue('id', $_GET['id'], PDO::PARAM_INT);
-
+            $preparedRequest->execute();
             extract($_POST);
 
-            header('Location: voirAnnonce.php');
+            header('Location: ./espace-membre.php');
         } else {
             $horaire = $data['horaire'];
             $startDate = $data['startDate'];
             $endDate = $data['endDate'];
-            $note = $data['note'];
+            // $note = $data['note'];
             $actif = $data['actif'];
+            $biographie = $data['biographie'];
         }
     }
 } else {
@@ -108,20 +111,21 @@ if (isset($_GET['id']) && isset($_SESSION['id'])) { // Create / Update (CRUD)
             }
             $preparedRequest->bindValue('userAnimauxID', $_SESSION['id'], PDO::PARAM_INT);
             $preparedRequest->execute();
-            $animaux_ID = $DB->lastInsertId();
+            $animaux_id = $DB->lastInsertId();
            
            
            
            
-            $preparedRequest2 = $DB->prepare('INSERT INTO annonce (horaire,startDate, endDate,note,actif,userID,animaux_ID) VALUES (:horaire,:startDate, :endDate,:note,:actif,:userID,:animaux_ID)');
+            $preparedRequest2 = $DB->prepare('INSERT INTO annonce (horaire,startDate, endDate,actif,userID,animaux_id,biographie) VALUES (:horaire,:startDate, :endDate,:actif,:userID,:animaux_id,:biographie)');
 
             $preparedRequest2->bindValue('horaire', $_POST['horaire'], PDO::PARAM_INT);
             $preparedRequest2->bindValue('startDate', strtotime(str_replace('/', '-', trim($_POST['startDate']))));
             $preparedRequest2->bindValue('endDate', strtotime(str_replace('/', '-', trim($_POST['endDate']))));
-            $preparedRequest2->bindValue('note', $_POST['note'], PDO::PARAM_INT);
+            // $preparedRequest2->bindValue('note', $_POST['note'], PDO::PARAM_INT);
             $preparedRequest2->bindValue('actif', $_POST['actif'], PDO::PARAM_BOOL);
             $preparedRequest2->bindValue('userID', $_SESSION['id'], PDO::PARAM_INT);
-            $preparedRequest2->bindValue('animaux_ID', $animaux_ID, PDO::PARAM_INT);
+            $preparedRequest2->bindValue('animaux_id', $animaux_id, PDO::PARAM_INT);
+            $preparedRequest2->bindValue('biographie', $_POST['biographie'], PDO::PARAM_STR);
             $preparedRequest2->execute();
 
            
@@ -129,7 +133,7 @@ if (isset($_GET['id']) && isset($_SESSION['id'])) { // Create / Update (CRUD)
                             
                             
 
-            header('Location: voirAnnonce.php');
+            header('Location: ./chercher_annonce.php');
         }
     }
 }
@@ -193,10 +197,16 @@ if (isset($_GET['id']) && isset($_SESSION['id'])) { // Create / Update (CRUD)
                         </div>
                     </div>
 
-                    <div class="row font_raleway_regular_15px lightgrey_txt">
+                    <!-- <div class="row font_raleway_regular_15px lightgrey_txt">
                         <div class="col-12">
                             <label for="note">Score ?</label><br />
-                            <input type="number" name="note" id="note" class="champs" value="<?php if (isset($note)) echo $note; ?>">
+                            <input type="number" name="note" id="note" class="champs" value="">
+                        </div>
+                    </div> -->
+                    <div class="row font_raleway_regular_15px lightgrey_txt">
+                        <div class="col-12">
+                            <label for="biographie">Decris toi</label><br />
+                            <input type="text" name="biographie" id="biographie" class="champs"value="<?php if (isset($biographie)) echo $biographie; ?>" >
                         </div>
                     </div>
 

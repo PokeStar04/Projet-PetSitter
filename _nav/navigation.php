@@ -4,8 +4,8 @@
     </div>
     <div class="navbar">
         <a class="font_raleway_regular_15px" href='/'>ACCUEIL</a>
-        <a class="font_raleway_regular_15px" href='../voirAnnonce.php'>ANNONCES</a>
-        <a class="font_raleway_regular_15px" href='../chercher_annonce.php'>chercher annonce</a>
+        
+        <a class="font_raleway_regular_15px" href='../chercher_annonce.php'>ANNONCE</a>
 
        
         <!-- <a class="font_raleway_regular_15px" href='../chercher_annonce.php'>CHERCHER</a> -->

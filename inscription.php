@@ -156,7 +156,7 @@ if (!empty($_POST)) {
             $preparedRequest->execute();
             $userID = $DB->lastInsertId();
 
-            $preparedRequest2 = $DB->prepare('INSERT INTO garder (promener, nourrir, garder, userID) VALUES (:promener,:nourrir, :garder,:userID)');
+            $preparedRequest2 = $DB->prepare('INSERT INTO garder (promener, nourrir, garder, userSeviceID) VALUES (:promener,:nourrir, :garder,:userSeviceID)');
             // if (isset($_POST['promener'])){
             $preparedRequest2->bindValue('promener', $_POST['promener'], PDO::PARAM_BOOL);
             // }
@@ -167,7 +167,7 @@ if (!empty($_POST)) {
             // if (isset($_POST['garder'])){
             $preparedRequest2->bindValue('garder', $_POST['garder'], PDO::PARAM_BOOL);
             // }
-            $preparedRequest2->bindValue('userID', $userID, PDO::PARAM_INT);
+            $preparedRequest2->bindValue('userSeviceID', $userID, PDO::PARAM_INT);
             $preparedRequest2->execute();
             header('Location: connexion.php');
             require_once('close.php');
@@ -254,10 +254,6 @@ if (!empty($_POST)) {
 
                     <div class="row font_raleway_regular_15px lightgrey_txt">
                         <div class="col-12">
-                            <!-- <label for="mdp">Mot de passe*</label><br />
-                            <input type="password" class="box-input" name="password" placeholder="Mot de passe" required /> -->
-
-
                             <input type="password" name="mdp" id="mdp" placeholder="Mot de Passe" class="champs full" required>
                         </div>
                     </div>
@@ -316,15 +312,15 @@ if (!empty($_POST)) {
                     <div class="row services">
                         <div class="font_raleway_regular_15px green_txt">
                             <div class="col-3">
-                                <input type="checkbox" id="garder" name="garder" value="1">
+                                <input type="checkbox" id="garder" name="garder" value="<?php  isset($_POST['garder']) ? $_POST['garder']=1 : $_POST['garder']=0  ?>">
                                 <label for="garder">Garder</label>
                             </div>
                             <div class="col-3">
-                                <input type="checkbox" id="nourrir" name="nourrir" value="1">
+                                <input type="checkbox" id="nourrir" name="nourrir" value="<?php  isset($_POST['nourrir']) ? $_POST['nourrir']=1 : $_POST['nourrir']=0  ?>">
                                 <label for="nourrir">Nourrir</label>
                             </div>
                             <div class="col-3">
-                                <input type="checkbox" id="promener" name="promener" value="1">
+                                <input type="checkbox" id="promener" name="promener" value="<?php  isset($_POST['promener']) ? $_POST['promener']=1 : $_POST['promener']=0  ?>">
                                 <label for="promener">Promener</label>
                             </div>
                         </div>

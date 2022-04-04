@@ -28,8 +28,8 @@ if(!empty($_POST)){
 
 <div class="container">
     <div class="row">
-        <div class="col-3">&nbsp;</div>
-        <div class="col-7">
+        <div class="col-4">&nbsp;</div>
+        <div class="col-8">
             <h3 class="font_raleway_regular_25px black_txt">Connecte-toi à ton espace !</h3>
             <form method="post" action="">
                     <div class="row font_raleway_regular_15px lightgrey_txt">
