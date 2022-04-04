@@ -14,7 +14,7 @@ $query = $DB->prepare('
 $query->bindValue('userid', $_SESSION['id'], PDO::PARAM_INT);
 $query->execute();
 $results = $query->fetchAll(PDO::FETCH_ASSOC);
-var_dump($results);
+
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -23,7 +23,7 @@ var_dump($results);
 	<?php
 	require_once('./_head/meta.php');
 	require_once('./_head/link.php');
-	cla
+
 	?>
 
 	<title>Mon espace membre — Petsitter</title>
