@@ -104,7 +104,7 @@ require_once('./_head/script.php');
                     </div>
                     <div id="range">
                         <div class="col-4">
-                            <input type="text" name="startDate" id="startDate" class="champs" value="<?php if (isset($startDate)) echo $startDate; ?>">
+                            <input type="text" name="startDate" id="startDate" class="champs" value="<?php if (isset($startDate)) echo $startDate; ?>" required>
                         </div>
 
                         <div class="col-1">
@@ -112,7 +112,7 @@ require_once('./_head/script.php');
                         </div>
 
                         <div class="col-4">
-                            <input type="text" name="endDate" class="champs" value="<?php if (isset($endDate)) echo $endDate; ?>">
+                            <input type="text" name="endDate" class="champs" value="<?php if (isset($endDate)) echo $endDate; ?>" required>
                         </div>
                     </div>
                 </div>
@@ -129,15 +129,15 @@ require_once('./_head/script.php');
                 <div class="row services">
                     <div class="font_raleway_regular_15px green_txt">
                         <div class="col-3">
-                            <input type="radio" id="nourrir" name="service" value="nourrir">
+                            <input type="radio" id="nourrir" name="service" value="nourrir" required>
                             <label for="nourrir">Nourrir</label>
                         </div>
                         <div class="col-3">
-                            <input type="radio" id="promener" name="service" value="promener">
+                            <input type="radio" id="promener" name="service" value="promener" required>
                             <label for="promener">Promener</label>
                         </div>
                         <div class="col-3">
-                            <input type="radio" id="garder" name="service" value="garder">
+                            <input type="radio" id="garder" name="service" value="garder" required>
                             <label for="garder">Garder</label>
                         </div>
                     </div>

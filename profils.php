@@ -9,7 +9,7 @@ if (!isset($_SESSION['id'])) {
 
 // Je récupére les infos dans la table utilisateur
 $i= $_SESSION['id'];
-$userInfo = "SELECT prenom,nom,photo,pays,descript FROM utilisateur WHERE id = $i ";
+$userInfo = "SELECT * FROM utilisateur WHERE id = $i ";
 $profilInfo = $DB->prepare($userInfo);
 $profilInfo->execute();
 $user = $profilInfo->fetch(PDO::FETCH_ASSOC);
@@ -53,7 +53,7 @@ $commentaire = $profilCom->fetch(PDO::FETCH_ASSOC);
 		<div class="row">
 			<div class="col-4 user ">
 				<div>
-					<img src="<?php echo $result['photo'] ?>" style="margin-right:8px;">
+					<img src="upload/<?php echo $user['photo'] ?>" style="margin-right:8px; width: 50px; height: 50px; border-radius: 50%;">
 				</div>
 
 				<div>
@@ -82,7 +82,7 @@ $commentaire = $profilCom->fetch(PDO::FETCH_ASSOC);
 		<div class="row">
 			<div class="col-12">
 				<div>
-					<a href="mailto:<?php echo $result['mail'] ?>"><button class="white_txt font_raleway_regular_15px"> <img src="ressources/icon-send.svg" width="8%"> Envoyer un message</button></a>
+					<a href="mailto:<?php echo $user['mail'] ?>"><button class="white_txt font_raleway_regular_15px"> <img src="ressources/icon-send.svg" width="8%"> Envoyer un message</button></a>
 					<button class="white_txt font_raleway_regular_15px"> <img src="ressources/icon-favoris.svg" width="8%"> Mes pet’favoris</button>
 				</div>
 			</div>
@@ -91,56 +91,57 @@ $commentaire = $profilCom->fetch(PDO::FETCH_ASSOC);
 			<div class="col-12">
 				<span class="green_txt  font_raleway_regular_25px">À propos</span>	
 				<p class="font_raleway_regular_15px"> <?php echo $user['descript']//if ($user['descript'])=NULL ? echo $user['descript']  : jhbk?></p>
-				<a href="edit_profils.php"><button class="white_txt font_raleway_regular_15px"> edit</button></a>
+				<a href="edit_profils.php"><button class="white_txt font_raleway_regular_15px">Modifier ma biographie</button></a>
 			</div>
-			<span class="green_txt  font_raleway_regular_25px">Commentaires</span>
-			<?php		// Je récupére le nombre d'annonce poster
-		$query = $DB->prepare('
-			SELECT utilisateur.*, COUNT(annonce.id) AS nbAnnonces FROM utilisateur 
-			JOIN annonce ON annonce.userID = utilisateur.id 
-			WHERE utilisateur.id = :userid
-		');
-		$query->bindValue('userid', $_GET['id'], PDO::PARAM_INT);
-		$query->execute();
-		$result = $query->fetch(PDO::FETCH_ASSOC);
+			<div class="col-12">
+				<span class="green_txt  font_raleway_regular_25px">Commentaires</span>
+				<?php		// Je récupére le nombre d'annonce poster
+					$query = $DB->prepare('
+						SELECT utilisateur.*, COUNT(annonce.id) AS nbAnnonces FROM utilisateur 
+						JOIN annonce ON annonce.userID = utilisateur.id 
+						WHERE utilisateur.id = :userid
+					');
+					$query->bindValue('userid', $_GET['id'], PDO::PARAM_INT);
+					$query->execute();
+					$result = $query->fetch(PDO::FETCH_ASSOC);
 
 
+					//je créé mon tableau ou je stack les commentaires correspondant au profils
 
-		//je créé mon tableau ou je stack les commentaires correspondant au profils
-
-		$infoRecherche = $query->fetchAll(PDO::FETCH_ASSOC);
-		foreach($commentaire as $info){
-			$commentaire_Du_profils = ['userID'];
-			$petCom= "SELECT nom, prenom, photo,commentaire FROM commentaires 
-			LEFT JOIN utilisateur ON commentaires.petsitterID = utilisateur.id";
-			$annonceInfo = $DB->prepare($petCom);
-			$annonceInfo->execute();
-			$annonce = $annonceInfo->fetch(PDO::FETCH_ASSOC);
-		?>
-	<div class="col-12">
-	<div class="commentaires">
-		<div class="box-commentaires">
-			<div class="col-3-sm">
-				<img class="img-rond-75" src="./upload/<?php echo $annonce['photo'] ?>" style="margin-right:8px;">
-				<span class="font_raleway_regular_15px lightgrey_txt"> <?php echo $annonce ['prenom'] ?></span>
+					$infoRecherche = $query->fetchAll(PDO::FETCH_ASSOC);
+					foreach($commentaire as $info){
+						$commentaire_Du_profils = ['userID'];
+						$petCom= "SELECT nom, prenom, photo,commentaire FROM commentaires 
+						LEFT JOIN utilisateur ON commentaires.petsitterID = utilisateur.id";
+						$annonceInfo = $DB->prepare($petCom);
+						$annonceInfo->execute();
+						$annonce = $annonceInfo->fetch(PDO::FETCH_ASSOC);
+				?>
+					<div class="col-12">
+						<div class="commentaires">
+							<div class="box-commentaires">
+								<div class="col-3-sm">
+									<img class="img-rond-75" src="./upload/<?php echo $annonce['photo'] ?>" style="margin-right:8px;">
+									<span class="font_raleway_regular_15px lightgrey_txt"> <?php echo $annonce ['prenom'] ?></span>
+								</div>
+								<div class="col-9-sm">
+									<span class="font_raleway_regular_15px "><?php echo $commentaire['commentaire'] ?></span>
+								</div>
+							</div>
+						</div>
+					</div>
+				<?php
+				} // fin du foreach
+				?>
+				<br>
+				<div>
+					<span class="font_raleway_regular_15px" > <img src="ressources/icon-verify.svg" width="32px" style="margin-right: 10px;">a signé la charte des Petsitter</span><br/>
+					<span class="font_raleway_regular_15px" > <img src="ressources/icon-petfavoris.svg" width="32px" style="margin-right: 10px">a reçu 57 pet’favoris</span>
+				</div>
 			</div>
-			<div class="col-9-sm">
-				<span class="font_raleway_regular_15px "><?php echo $commentaire['commentaire'] ?></span>
-			</div>
-		</div>
-	</div>
-</div>
+		</div>  <!-- row -->
+	</div> <!-- container -->
 
-<?php
-}
-?>
-		</div>
-		</br>
-		<div>
-			<span class="font_raleway_regular_15px" > <img src="ressources/icon-verify.svg" width="32px" style="margin-right: 10px;">a signé la charte des Petsitter</span><br/>
-			<span class="font_raleway_regular_15px" > <img src="ressources/icon-petfavoris.svg" width="32px" style="margin-right: 10px">a reçu 57 pet’favoris</span>
-		</div>
-	</div>
 
 
 	<?php
