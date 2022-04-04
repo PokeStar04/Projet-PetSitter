@@ -1,12 +1,7 @@
 <?php
 include_once('./require.php');
 
-if (isset($_SESSION['id'])) {
 
-    $var = 'Bonjour ' . $_SESSION['prenom'] .  $_SESSION['nom'];
-} else {
-    $var = 'Bonjour à tous';
-}
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -23,7 +18,7 @@ if (isset($_SESSION['id'])) {
 
 <body>
     <?php require_once('./_nav/navigation.php') ?>
-    <!-- <h1><?= $var ?></h1> -->
+
     <div class="container homepage">
         <div class="row">
 

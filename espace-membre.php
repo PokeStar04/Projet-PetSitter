@@ -23,7 +23,7 @@ $results = $query->fetchAll(PDO::FETCH_ASSOC);
 	<?php
 	require_once('./_head/meta.php');
 	require_once('./_head/link.php');
-	cla
+
 	?>
 
 	<title>Mon espace membre — Petsitter</title>
