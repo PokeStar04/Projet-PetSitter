@@ -316,6 +316,10 @@ if (isset($_POST['pays']) && (!empty($_POST['pays'])) && isset($_POST['postal'])
     
     </div></div>
 
+<?php
+    require_once('./_footer/footer.php');
+    require_once('./_head/script.php');
+?>
 
 <link href="style/datepicker.min.css" rel="stylesheet">
     <script src="script/datepicker-full.min.js"></script>

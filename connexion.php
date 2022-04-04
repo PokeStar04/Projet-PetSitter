@@ -23,7 +23,7 @@ if(!empty($_POST)){
     <title>Se connecter — Petsitter</title>
     <link href="/style/formulaire.css" rel="stylesheet">
 </head>
-<body>
+<body class="keepbottom">
 <?php require_once('./_nav/navigation.php')?>
 
 <div class="container">

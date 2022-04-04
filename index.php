@@ -24,7 +24,7 @@ if (isset($_SESSION['id'])) {
 <body>
     <?php require_once('./_nav/navigation.php') ?>
     <!-- <h1><?= $var ?></h1> -->
-    <div class="container">
+    <div class="container homepage">
         <div class="row">
 
             <div class="col-7">
@@ -123,12 +123,13 @@ if (isset($_SESSION['id'])) {
                 </div>
             </div>
         </div>
-   
-    <?php
-    require_once('./_footer/footer.php');
-    require_once('./_head/script.php');
-    ?>
     </div>
+
+
+    <?php
+        require_once('./_footer/footer.php');
+        require_once('./_head/script.php');
+    ?>
 
 
     <script>
@@ -145,4 +146,5 @@ if (isset($_SESSION['id'])) {
         }, 2000)
     </script>
 </body>
+
 </html>

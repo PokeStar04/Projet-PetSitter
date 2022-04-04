@@ -18,8 +18,16 @@
     background-color: #B8B2B2;
 }
 
+.darkgrey_txt{
+    color: #908d8d;
+}
+
 .lightgrey_txt{
     color: #C4C4C4;
+}
+
+.darkgreen_txt{
+    color: #AFC74E;
 }
 
 .green_txt{

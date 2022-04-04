@@ -341,10 +341,6 @@ if (!empty($_POST)) {
 
 
     <?php
-
-
-
-
     require_once('./_footer/footer.php')
     ?>
     <link href="style/datepicker.min.css" rel="stylesheet">

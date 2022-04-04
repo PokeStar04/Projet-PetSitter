@@ -1,0 +1,22 @@
+
+.footer{
+    height: 140px;
+    width: 100%;
+    margin-top: auto;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+
+}
+
+
+
+.keepbottom .footer {
+    position: absolute;
+    bottom: 0;
+}
+
+p{
+    margin-top: 15px;
+
+}
