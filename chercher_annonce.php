@@ -217,7 +217,7 @@ require_once('./_head/script.php');
 
                     <div class="row">
                         <div class="col-5">
-                            <button type="submit" name="submit" class="white_txt font_raleway_regular_15px">Trouver mon best petsitter</button>
+                            <button type="submit" name="submit" class="white_txt font_raleway_regular_15px">Trouver le meilleur petsitter</button>
                         </div>
                     </div>
                 </div>
