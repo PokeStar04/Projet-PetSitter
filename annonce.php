@@ -173,14 +173,14 @@ if (isset($_GET['id']) && isset($_SESSION['id'])) { // Create / Update (CRUD)
                 <form method="post">
                     <div class="row font_raleway_regular_15px lightgrey_txt">
                         <div class="col-12">
-                            <label id="horaire">Horaire</label><br />
+                            <label id="horaire">Horaire*</label><br />
                             <input type="text" name="horaire" id="horaire" placeholder="horaire" class="champs" value="<?php if (isset($horaire)) echo $horaire; ?>">
                         </div>
                     </div>
 
                     <div class="row font_raleway_regular_15px lightgrey_txt">
                         <div class="col-12">
-                            <label for="startDate">Sur quelle période en avez-vous besoin ?</label>
+                            <label for="startDate">Période de disponibilité*</label>
                         </div>
                         <div id="range">
                             <div class="col-4">
@@ -205,7 +205,7 @@ if (isset($_GET['id']) && isset($_SESSION['id'])) { // Create / Update (CRUD)
                     </div> -->
                     <div class="row font_raleway_regular_15px lightgrey_txt">
                         <div class="col-12">
-                            <label for="biographie">Decris toi</label><br />
+                            <label for="biographie">Décris toi (ce qui permettra de mieux te connaître ! )</label><br />
                             <input type="text" name="biographie" id="biographie" class="champs"value="<?php if (isset($biographie)) echo $biographie; ?>" >
                         </div>
                     </div>
@@ -221,7 +221,7 @@ if (isset($_GET['id']) && isset($_SESSION['id'])) { // Create / Update (CRUD)
                     <div class="row services">
                         <div class="font_raleway_regular_15px green_txt">
                             <div class="col-12 lightgrey_txt">                            
-                                <label>Choisissez les animaux que vous pouvez garder :</label>
+                                <label>Choisissez les animaux que vous pouvez garder :*</label>
                             </div>
                             <div class="col-6">
 
