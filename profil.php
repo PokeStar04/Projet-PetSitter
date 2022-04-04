@@ -116,12 +116,19 @@ if($result['id'] !== $_GET['id']) {
 <?php
 }
 ?>
-					<a href="commentaire.php?id=<?=$_GET['id']?>">
-					<button class="white_txt font_raleway_regular_15px"> +</button>
-					</a>
+					<div class="col-12">
+						<a href="commentaire.php?id=<?=$_GET['id']?>">
+							<button class="white_txt font_raleway_regular_15px">Ajouter un commentaire à ce petsitter</button>
+						</a>
+						<br><br>
+
+						<span class="font_raleway_regular_15px" style="display: flex; align-items: center;"> <img src="ressources/icon-verify.svg" width="32px" style="margin-right: 10px;">a signé la charte des Petsitter</span><br/>
+						<span class="font_raleway_regular_15px" style="display: flex; align-items: center;"> <img src="ressources/icon-petfavoris.svg" width="32px" style="margin-right: 10px">a reçu 57 pet’favoris</span>
+
+					</div>
+				
 				</div>
-				<span class="font_raleway_regular_15px" style="display: flex; align-items: center;"> <img src="ressources/icon-verify.svg" width="32px" style="margin-right: 10px;">a signé la charte des Petsitter</span><br/>
-				<span class="font_raleway_regular_15px" style="display: flex; align-items: center;"> <img src="ressources/icon-petfavoris.svg" width="32px" style="margin-right: 10px">a reçu 57 pet’favoris</span>
+				
 
 
 

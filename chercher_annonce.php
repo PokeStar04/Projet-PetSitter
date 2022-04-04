@@ -2,17 +2,6 @@
 include_once('./require.php');
 session_start();
 
-if(isset($_SESSION['id'])){
-    header('Location: /');
-    exit;
-}
-if(isset($_SESSION['id'])){
-
-$var = 'Bonjour '. $_SESSION['prenom'].  $_SESSION['nom'];
-}else{
-$var = 'Bonjour à tous';
-}
-
 ?>
 
 

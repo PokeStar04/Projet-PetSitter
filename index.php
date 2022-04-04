@@ -32,7 +32,7 @@ if (isset($_SESSION['id'])) {
                 <p class="font_raleway_regular_15px" style="margin-top:10px;">
                     Nous croyons que trouver une personne fiable pour garder vos animaux est quelque chose de primordiale et doit être facile.
                 </p>
-                <a href='voirAnnonce.php'>
+                <a href='chercher_annonce.php'>
                     <button class="white_txt font_raleway_regular_15px">Trouver un petsitter</button>
                 </a>
             </div>

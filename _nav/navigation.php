@@ -15,8 +15,8 @@
             <a class="font_raleway_regular_15px" href="../inscription.php">INSCRIPTION</a>
         <?php } else { ?>
             <a class="font_raleway_regular_15px" href="../espace-membre.php">MON ESPACE</a>
+            <a class="font_raleway_regular_15px" href="../profils.php">MON PROFIL</a>
             <a class="font_raleway_regular_15px" href="../deconnexion.php">DECONNEXION</a>
-            <a class="font_raleway_regular_15px" href="../profils.php">mon profils</a>
         <?php } ?>
     </div>
 </div>
