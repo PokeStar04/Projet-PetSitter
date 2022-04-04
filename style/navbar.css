@@ -1,5 +1,4 @@
 .header {
-  
     display: flex;
     justify-content: space-between;
     width: 100%;
@@ -25,4 +24,18 @@
 
 .logo {
     flex: 1;
+}
+
+@media screen and (max-width: 680px) {
+    .header {
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+    .navbar {
+        flex-direction: column;
+    }
+    .navbar a {
+        margin-bottom: 20px;
+    }
 }
