@@ -8,13 +8,13 @@ if (!isset($_SESSION['id'])) {
 }
 
 $query = $DB->prepare('
-	SELECT * FROM annonce LEFT JOIN garder ON annonce.garder_id = garder.id
+	SELECT * FROM annonce 
 	WHERE userID = :userid
 ');
 $query->bindValue('userid', $_SESSION['id'], PDO::PARAM_INT);
 $query->execute();
 $results = $query->fetchAll(PDO::FETCH_ASSOC);
-var_dump($results)
+var_dump($results);
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -23,6 +23,7 @@ var_dump($results)
 	<?php
 	require_once('./_head/meta.php');
 	require_once('./_head/link.php');
+	cla
 	?>
 
 	<title>Mon espace membre — Petsitter</title>
@@ -47,6 +48,7 @@ var_dump($results)
 			</div>
 			<?php
 			foreach ($results as $annonce) {
+		
 				if (!$annonce['actif']) continue; // si l'annonce est inactive ça nous intéresse pas ici
 			?>
 				<div class="col-4 font_raleway_regular_15px box-info">
@@ -54,7 +56,7 @@ var_dump($results)
 					<p>ANIMAL : Chien </p> <!-- à faire plus tard -->
 					<p>SERVICE : promener </p> <!-- à faire plus tard -->
 					<p>DURÉE : du <?php echo date('d/m/Y', $annonce['startDate']) ?> au <?php echo date('d/m/Y', $annonce['endDate']) ?></p>
-					<a href="annonce.php?id=<?php echo $annonce['id'] ?>">
+					<a href="annonce.php?id=<?=$annonce['id']?>">
 						<button class="white_txt font_raleway_regular_15px"> Modifier une annonce</button><br><br>
 					</a>
 					<a class="lightgrey_txt" href="supprimer-annonce.php?id=<?php echo $annonce['id'] ?>">
