@@ -12,3 +12,5 @@ Service souhaité = nourrir ou promener
 
 Animal = chien ou chat ou chien et chat 
 
+On trouve les annonces qui sont dans une tranche de moins 2 semaines avant la date et de 2 semaine après la date indiquée.
+
